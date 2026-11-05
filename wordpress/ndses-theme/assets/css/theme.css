@@ -353,6 +353,16 @@ li + li {
   max-width: 820px;
 }
 
+/* Text pages (Terms, Privacy, …): a heading after a paragraph starts a new
+   topic, so it gets clear space above it. */
+.content-body > :where(h2, h3, h4):not(:first-child) {
+  margin-top: var(--space-10);
+}
+
+.content-body > :where(ul, ol) {
+  margin: 0 0 1em;
+}
+
 /* ---------- Type helpers ---------- */
 /* Small plain label above the calculator's recommendation. */
 .result-label {
@@ -1307,6 +1317,14 @@ main:has(> section.soft-section:last-child) + .site-footer .footer-cta {
   list-style: none;
 }
 
+/* Lists carry no margin of their own; whatever follows one (a note, an
+   image, a paragraph) needs space. One class of specificity: enough to beat
+   the base p margin, while component rules (e.g. dumpster cards) still
+   decide their own gaps. */
+:is(.check-list, .compact-list, .danger-list) + :where(p, img, figure, div, a) {
+  margin-top: var(--space-4);
+}
+
 .check-list li,
 .compact-list li,
 .danger-list li {
@@ -1344,8 +1362,9 @@ main:has(> section.soft-section:last-child) + .site-footer .footer-cta {
 }
 
 .zone-map-image {
+  display: block;
   width: min(100%, 520px);
-  margin-inline: auto;
+  margin-top: var(--space-6);
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
@@ -1454,6 +1473,14 @@ main:has(> section.soft-section:last-child) + .site-footer .footer-cta {
 
 .kicker--empty {
   visibility: hidden;
+}
+
+/* The empty slot only lines headings up across a row; with one card per
+   row it would just be a gap. */
+@media (max-width: 559px) {
+  .kicker--empty {
+    display: none;
+  }
 }
 
 .dumpster-card > :not(img):not(.container-image):not(h3):not(.kicker) {
