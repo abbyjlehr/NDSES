@@ -268,11 +268,11 @@ The FAQs page shows exactly the FAQs published here (21 today).
 The map shows exactly the areas published here (9 today). Ignore the Schedule boxes on this screen.
 
 **The address check uses this list too.** When a visitor types an address on the Dumpster Calculator, the site looks at which county it's in:
-- A county where you offer **Residential** service (Walworth today) gets "✓ in the NDS service area".
+- **Walworth County** gets "✓ in the NDS service area".
 - Any other county with a published Service Area gets "✓ likely in the NDS service area — call to confirm".
 - A county with no published Service Area gets "outside the core NDS service area — call to confirm".
 
-So publishing or unpublishing a county entry changes what the address check says — there's nothing else to set.
+So publishing or unpublishing a county entry changes what the address check says — there's nothing else to set. (Walworth is fixed as the home county; ask your developer if that ever changes.)
 
 Holiday and delay dates are communicated with [Service Notices](#posting-alerts--notices) and the community calendar downloads; the **Schedule Items** menu isn't used by the site.
 

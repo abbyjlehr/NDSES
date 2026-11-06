@@ -11,8 +11,8 @@ if (!defined('ABSPATH')) {
 }
 
 // The counties the lookup matches against come from the published Service
-// Areas: see ndses_service_counties() and ndses_residential_counties() in
-// inc/cms.php. They reach the browser through the ndsesData script object.
+// Areas: see ndses_service_counties() and ndses_home_county() in inc/cms.php.
+// They reach the browser through the ndsesData script object.
 
 function ndses_handle_geocode_request(): void
 {

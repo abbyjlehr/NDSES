@@ -168,7 +168,9 @@ function ndses_service_counties(): array
 {
     $counties = [];
     foreach (ndses_get_service_areas() as $area) {
-        $county = trim(preg_replace('/\s+county$/i', '', (string) $area['county']));
+        // Trim first: an editor's trailing space would otherwise defeat the
+        // end-anchored "County" strip and the browser's exact match.
+        $county = trim((string) preg_replace('/\s+county\s*$/i', '', trim((string) $area['county'])));
         if ($county !== '') {
             $counties[$county] = true;
         }
@@ -178,23 +180,14 @@ function ndses_service_counties(): array
 }
 
 /**
- * Counties with residential service: where an address gets the definite
- * "in the service area" answer rather than "likely, call to confirm".
+ * The county where an address gets the definite "in the NDS service area"
+ * answer. Other published counties get "likely, call to confirm". Walworth
+ * is where the residential communities are; the lookup stays at county
+ * level, so this is fixed rather than derived from Service Areas.
  */
-function ndses_residential_counties(): array
+function ndses_home_county(): string
 {
-    $counties = [];
-    foreach (ndses_get_service_areas() as $area) {
-        if (!in_array('Residential', $area['types'], true)) {
-            continue;
-        }
-        $county = trim(preg_replace('/\s+county$/i', '', (string) $area['county']));
-        if ($county !== '') {
-            $counties[$county] = true;
-        }
-    }
-
-    return array_keys($counties);
+    return 'Walworth';
 }
 
 /**

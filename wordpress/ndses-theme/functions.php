@@ -67,7 +67,7 @@ add_action('wp_enqueue_scripts', function () {
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'restUrl' => esc_url_raw(rest_url('ndses/v1/')),
         'serviceCounties' => ndses_service_counties(),
-        'residentialCounties' => ndses_residential_counties(),
+        'homeCounty' => ndses_home_county(),
         'phone' => ndses_setting('phone'),
         'recaptchaSiteKey' => $recaptcha_site_key ?: '',
     ]);
