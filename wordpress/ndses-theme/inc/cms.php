@@ -126,7 +126,11 @@ function ndses_get_faqs(): array
     return array_filter($groups);
 }
 
-/** Service areas for the coverage map: [['name', 'county', 'types', 'x', 'y'], ...]. */
+/**
+ * Service areas for the coverage map: [['name', 'county', 'types', 'lat', 'lon'], ...].
+ * 'lat'/'lon' are decimal degrees, or null when the editor left them blank
+ * (counties, or a town that should be listed without a pin).
+ */
 function ndses_get_service_areas(): array
 {
     $posts = ndses_cms_posts('service_area');
@@ -135,6 +139,11 @@ function ndses_get_service_areas(): array
     }
 
     $type_labels = ['residential' => 'Residential', 'commercial' => 'Commercial', 'rollOff' => 'Roll-off'];
+    $coordinate = static function (string $key, int $post_id): ?float {
+        $value = ndses_acf($key, $post_id);
+
+        return is_numeric($value) ? (float) $value : null;
+    };
     $areas = [];
     foreach ($posts as $post) {
         $types = array_values(array_intersect_key($type_labels, array_flip((array) ndses_acf('service_types', $post->ID))));
@@ -142,12 +151,50 @@ function ndses_get_service_areas(): array
             'name' => get_the_title($post),
             'county' => (string) ndses_acf('county', $post->ID),
             'types' => $types,
-            'x' => max(0, min(100, (float) ndses_acf('map_x', $post->ID))),
-            'y' => max(0, min(100, (float) ndses_acf('map_y', $post->ID))),
+            'lat' => $coordinate('latitude', $post->ID),
+            'lon' => $coordinate('longitude', $post->ID),
         ];
     }
 
     return $areas;
+}
+
+/**
+ * Counties the address lookup treats as served: the distinct County values of
+ * the published Service Areas (or the seed), without the word "County".
+ * The client controls this list by publishing and unpublishing Service Areas.
+ */
+function ndses_service_counties(): array
+{
+    $counties = [];
+    foreach (ndses_get_service_areas() as $area) {
+        $county = trim(preg_replace('/\s+county$/i', '', (string) $area['county']));
+        if ($county !== '') {
+            $counties[$county] = true;
+        }
+    }
+
+    return array_keys($counties);
+}
+
+/**
+ * Counties with residential service: where an address gets the definite
+ * "in the service area" answer rather than "likely, call to confirm".
+ */
+function ndses_residential_counties(): array
+{
+    $counties = [];
+    foreach (ndses_get_service_areas() as $area) {
+        if (!in_array('Residential', $area['types'], true)) {
+            continue;
+        }
+        $county = trim(preg_replace('/\s+county$/i', '', (string) $area['county']));
+        if ($county !== '') {
+            $counties[$county] = true;
+        }
+    }
+
+    return array_keys($counties);
 }
 
 /**

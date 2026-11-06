@@ -2,7 +2,7 @@
 /**
  * Plugin Name: NDSES CMS Structure
  * Description: Registers NDSES custom post types, ACF options pages, and local field groups.
- * Version: 0.2.3
+ * Version: 0.2.4
  */
 
 if (!defined('ABSPATH')) {

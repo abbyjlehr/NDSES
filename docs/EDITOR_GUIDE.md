@@ -125,7 +125,7 @@ This is the one screen that controls information shown across the *entire* site 
 | Mission Statement | The "Our Mission" box on the Home and About pages |
 | About Page: Our Story | The company history on the About page. Leave blank to keep the current text |
 
-At the bottom of this screen you'll also see a few **Integration Status** fields (PayEngine Status, Form Backend Status, Google Maps Status, Facebook Alert Sync Status, Calendar Integration Status). Most of these are informational notes for your developer, not switches — changing them doesn't turn anything on or off. **PayEngine Status is the exception**: it's a real switch, and it sits next to the actual PayEngine credential fields (Public Key, API Host, Server API URL, Merchant ID) — see [Accepting Payments](#accepting-payments-payengine) before touching any of these.
+At the bottom of this screen you'll also see a few **Integration Status** fields (PayEngine Status, Form Backend Status, Facebook Alert Sync Status, Calendar Integration Status). Most of these are informational notes for your developer, not switches — changing them doesn't turn anything on or off. **PayEngine Status is the exception**: it's a real switch, and it sits next to the actual PayEngine credential fields (Public Key, API Host, Server API URL, Merchant ID) — see [Accepting Payments](#accepting-payments-payengine) before touching any of these.
 
 ## Editing Page Content
 
@@ -251,21 +251,28 @@ The FAQs page shows exactly the FAQs published here (21 today).
 
 **Menu: Service Areas**
 
-**Service Areas** power the coverage map shown on the Home, About, and Commercial pages. Each entry is a town or county with:
-- County name
+**Service Areas** power the coverage map shown on the Home, About, and Commercial pages, and the address check on the Dumpster Calculator. Each entry is a town or county with:
+- County name (for example "Walworth County")
 - Service Types (check any combination of **Residential**, **Commercial**, **Temporary roll-off / dumpster rentals**)
-- Map X/Y Position — these are percentage coordinates (0–100) placing the dot on the schematic map. If a new entry looks off-position, nudge these numbers and refresh — ask your developer if you're not sure what to enter.
+- Latitude and Longitude — the town's position, in decimal degrees. Towns with these filled in get a numbered pin on the Walworth County map. Leave both blank for a county entry, or for a town outside Walworth County — it still appears in the list, just without a pin.
 
-![Service Area: County, Service Types, Map X/Y Position](images/acf-service-area.jpg)
+**Where to get latitude and longitude:** open Google Maps, right-click the centre of the town, and the first line of the menu shows two numbers like `42.6331, -88.6437`. The first is the Latitude, the second is the Longitude (it's negative here in Wisconsin). Click them to copy, then paste each into its field.
 
 **How to add or change a service area**
 1. In the left menu, click **Service Areas**. Click **Add New**, or click an area to edit it.
 2. Type the title (the town or county name) and the **County**.
 3. Check every **Service Type** you offer there.
-4. Set **Map X Position** (0 = left edge, 100 = right edge) and **Map Y Position** (0 = top, 100 = bottom).
-5. Click **Publish** (or **Save**), then check the dot on the Home page map and adjust the numbers if needed.
+4. For a town on the Walworth County map, paste its **Latitude** and **Longitude**. For a county, leave them blank.
+5. Click **Publish** (or **Save**), then check the pin on the Home page map.
 
 The map shows exactly the areas published here (9 today). Ignore the Schedule boxes on this screen.
+
+**The address check uses this list too.** When a visitor types an address on the Dumpster Calculator, the site looks at which county it's in:
+- A county where you offer **Residential** service (Walworth today) gets "✓ in the NDS service area".
+- Any other county with a published Service Area gets "✓ likely in the NDS service area — call to confirm".
+- A county with no published Service Area gets "outside the core NDS service area — call to confirm".
+
+So publishing or unpublishing a county entry changes what the address check says — there's nothing else to set.
 
 Holiday and delay dates are communicated with [Service Notices](#posting-alerts--notices) and the community calendar downloads; the **Schedule Items** menu isn't used by the site.
 

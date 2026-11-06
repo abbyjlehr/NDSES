@@ -20,22 +20,26 @@
       }
     },
     {
-      "key": "field_ndses_area_map_x",
-      "label": "Map X Position",
-      "name": "map_x",
+      "key": "field_ndses_area_latitude",
+      "label": "Latitude",
+      "name": "latitude",
       "type": "number",
-      "instructions": "TODO: ACF - Replace point coordinates with final GIS/polygon data when available.",
-      "min": 0,
-      "max": 100
+      "instructions": "Decimal degrees, for example 42.6331. Paste it from any map app (right-click the town in Google Maps and copy the first number). Only needed for a town shown on the Walworth County map; leave blank for counties.",
+      "required": 0,
+      "step": "any",
+      "min": -90,
+      "max": 90
     },
     {
-      "key": "field_ndses_area_map_y",
-      "label": "Map Y Position",
-      "name": "map_y",
+      "key": "field_ndses_area_longitude",
+      "label": "Longitude",
+      "name": "longitude",
       "type": "number",
-      "instructions": "TODO: ACF - Replace point coordinates with final GIS/polygon data when available.",
-      "min": 0,
-      "max": 100
+      "instructions": "Decimal degrees, for example -88.6437 (negative in Wisconsin). Paste it from the same map app as the latitude. Only needed for a town shown on the Walworth County map; leave blank for counties.",
+      "required": 0,
+      "step": "any",
+      "min": -180,
+      "max": 180
     },
     {
       "key": "field_ndses_schedule_description",
@@ -85,5 +89,6 @@
     ]
   ],
   "show_in_rest": 1,
-  "active": true
+  "active": true,
+  "modified": 1793980800
 }

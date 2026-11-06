@@ -273,11 +273,18 @@
       list.hidden = false;
     }
 
+    // Both county lists come from the published Service Areas (see
+    // ndses_service_counties() and ndses_residential_counties()):
+    // residential counties get a definite yes, the other listed counties a
+    // "likely, call to confirm", and anything else the outside message.
     function showStatus(county) {
-      const inArea = county && ndsesData.serviceCounties.indexOf(county) !== -1;
-      status.classList.toggle('in-area', Boolean(inArea));
-      if (inArea) {
+      const listed = county && (ndsesData.serviceCounties || []).indexOf(county) !== -1;
+      const residential = listed && (ndsesData.residentialCounties || []).indexOf(county) !== -1;
+      status.classList.toggle('in-area', Boolean(listed));
+      if (residential) {
         status.textContent = '✓ ' + county + ' County is in the NDS service area.';
+      } else if (listed) {
+        status.textContent = '✓ ' + county + ' County is likely in the NDS service area — call ' + ndsesData.phone + ' to confirm service at your address.';
       } else if (county) {
         status.textContent = county + ' County is outside the core NDS service area — call ' + ndsesData.phone + ' to confirm.';
       } else {

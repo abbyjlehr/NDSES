@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('NDSES_THEME_VERSION', '3.2.0');
+define('NDSES_THEME_VERSION', '3.3.0');
 define('NDSES_THEME_DIR', get_template_directory());
 
 require_once NDSES_THEME_DIR . '/inc/data.php';
@@ -66,7 +66,8 @@ add_action('wp_enqueue_scripts', function () {
     wp_localize_script('ndses-theme', 'ndsesData', [
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'restUrl' => esc_url_raw(rest_url('ndses/v1/')),
-        'serviceCounties' => NDSES_SERVICE_COUNTIES,
+        'serviceCounties' => ndses_service_counties(),
+        'residentialCounties' => ndses_residential_counties(),
         'phone' => ndses_setting('phone'),
         'recaptchaSiteKey' => $recaptcha_site_key ?: '',
     ]);

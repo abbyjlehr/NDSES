@@ -99,15 +99,33 @@ const detailSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${DW} ${
 <g transform="translate(${(miles5 + 40).toFixed(1)} -8)"><path d="M0 22 L9 0 L18 22 L9 16 Z" fill="#33433a"/><text x="9" y="40" text-anchor="middle">N</text></g>
 </g>
 </svg>`;
+// The detail map's frame. The theme (inc/template-tags.php) and the Next.js
+// app (lib/serviceAreaMap.ts) read this file and project each Service Area's
+// latitude/longitude onto the detail SVG with the same linear projection as
+// dx()/dy() above, so a town added in WordPress lands at the right spot.
+// Regenerating the map regenerates the bounds alongside it.
+const bounds = {
+  width: DW,
+  height: DH,
+  minLon: +dMinLon.toFixed(6),
+  maxLon: +dMaxLon.toFixed(6),
+  minLat: +dMinLat.toFixed(6),
+  maxLat: +dMaxLat.toFixed(6)
+};
+const root = path.join(__dirname, "..");
+for (const dir of ["wordpress/ndses-theme/assets/images", "public/nds-assets"]) {
+  fs.writeFileSync(path.join(root, dir, "service-area-detail-bounds.json"), JSON.stringify(bounds, null, 2) + "\n");
+}
+console.log("detail bounds", JSON.stringify(bounds));
+
+// Reference only: where the seeded towns land on the detail map, as percent
+// of width/height. The theme and app compute these at render time now.
 const detail = {};
 for (const [name, [lo, la]] of Object.entries(places)) detail[name] = { x: +(dx(lo) / DW * 100).toFixed(2), y: +(dy(la) / DH * 100).toFixed(2) };
 fs.writeFileSync(path.join(__dirname, "service-area-detail.svg"), detailSvg);
-fs.writeFileSync(path.join(__dirname, "service-area-detail.json"), JSON.stringify({ width: DW, height: DH, positions: detail }, null, 2));
 console.log("detail", DW, "x", DH, JSON.stringify(detail));
 
-// Copy the SVG to public/nds-assets/ and wordpress/ndses-theme/assets/images/,
-// and the town positions into lib/serviceAreaMap.ts and the theme map renderer.
+// Copy the SVGs to public/nds-assets/ and wordpress/ndses-theme/assets/images/.
 fs.writeFileSync(path.join(__dirname, "service-area-map.svg"), svg);
-fs.writeFileSync(path.join(__dirname, "positions.json"), JSON.stringify({ width: W, height: H, positions }, null, 2));
 console.log("size", W, "x", H, "svg bytes", svg.length);
 console.log(JSON.stringify(positions));
