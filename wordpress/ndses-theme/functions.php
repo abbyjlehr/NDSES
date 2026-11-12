@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('NDSES_THEME_VERSION', '3.2.0');
+define('NDSES_THEME_VERSION', '3.6.0');
 define('NDSES_THEME_DIR', get_template_directory());
 
 require_once NDSES_THEME_DIR . '/inc/data.php';
@@ -16,6 +16,7 @@ require_once NDSES_THEME_DIR . '/inc/cms.php';
 require_once NDSES_THEME_DIR . '/inc/page-sections.php';
 require_once NDSES_THEME_DIR . '/inc/template-tags.php';
 require_once NDSES_THEME_DIR . '/inc/geocode.php';
+require_once NDSES_THEME_DIR . '/inc/seo.php';
 
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
@@ -66,7 +67,8 @@ add_action('wp_enqueue_scripts', function () {
     wp_localize_script('ndses-theme', 'ndsesData', [
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'restUrl' => esc_url_raw(rest_url('ndses/v1/')),
-        'serviceCounties' => NDSES_SERVICE_COUNTIES,
+        'serviceCounties' => ndses_service_counties(),
+        'homeCounty' => ndses_home_county(),
         'phone' => ndses_setting('phone'),
         'recaptchaSiteKey' => $recaptcha_site_key ?: '',
     ]);

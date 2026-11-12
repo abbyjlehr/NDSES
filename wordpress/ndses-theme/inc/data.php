@@ -37,8 +37,8 @@ function ndses_data(): array
             'mailing_address' => 'PO Box 464, Delavan, WI 53115',
             'hours' => ['Monday - Thursday: 8:00am - 4:00pm', 'Friday: 8:00am - 2:00pm'],
             'service_area' => 'Southern Wisconsin, including Walworth County and select areas of Rock, Jefferson, Waukesha, and Kenosha counties.',
-            'facebook' => 'https://www.facebook.com/',
-            'instagram' => 'https://www.instagram.com/',
+            'facebook' => '',
+            'instagram' => '',
         ],
         'mission' => $mission,
         'our_story' => [
@@ -157,7 +157,7 @@ function ndses_data(): array
             ['title' => 'Dumpster Rentals', 'body' => 'Temporary roll-off dumpsters for renovations, construction debris, cleanouts, and events.', 'url' => '/dumpster-rentals', 'icon' => 'rolloff'],
         ],
         'communities' => [
-            'town-of-walworth' => array_merge(ndses_community_seed('Town of Walworth', 'Town', 'Thursday', 'Weekly', 'Every Other Week (see service calendar and map below)', 'We will collect up to the equivalent of four 32-gallon cans each week for both trash and recycle.', $mission, $accepted_recycling, $recycling_not_accepted, $recycling_never, $bulk_accepted, $bulk_not), [
+            'town-of-walworth' => array_merge(ndses_community_seed('Town of Walworth', 'Town', 'Thursday', 'Weekly', 'Every Other Week (see the service calendar below)', 'We will collect up to the equivalent of four 32-gallon cans each week for both trash and recycle.', $mission, $accepted_recycling, $recycling_not_accepted, $recycling_never, $bulk_accepted, $bulk_not), [
                 'documents' => [
                     ['title' => '2026 Collection Schedule Calendar', 'url' => 'https://ndses.flywheelsites.com/wp-content/uploads/2026/09/walworth-1.webp'],
                     ['title' => '2026 Service Schedule Calendar', 'url' => 'https://ndses.flywheelsites.com/wp-content/uploads/2026/09/walworth-2.webp'],
@@ -204,15 +204,16 @@ function ndses_data(): array
         'accepted_materials' => $rolloff_accepted,
         'prohibited_materials' => $rolloff_prohibited,
         'service_areas' => [
-            ['name' => 'Town of Walworth', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'x' => 49, 'y' => 45],
-            ['name' => 'Town of Delavan', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'x' => 54, 'y' => 57],
-            ['name' => 'City of Delavan', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'x' => 58, 'y' => 54],
-            ['name' => 'Town of Darien', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'x' => 38, 'y' => 42],
-            ['name' => 'Town of Sharon', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'x' => 46, 'y' => 70],
-            ['name' => 'Rock County', 'county' => 'Rock County', 'types' => ['Commercial', 'Roll-off'], 'x' => 26, 'y' => 63],
-            ['name' => 'Jefferson County', 'county' => 'Jefferson County', 'types' => ['Commercial', 'Roll-off'], 'x' => 56, 'y' => 26],
-            ['name' => 'Waukesha County', 'county' => 'Waukesha County', 'types' => ['Commercial', 'Roll-off'], 'x' => 76, 'y' => 24],
-            ['name' => 'Kenosha County', 'county' => 'Kenosha County', 'types' => ['Commercial', 'Roll-off'], 'x' => 82, 'y' => 72],
+            // Town coordinates match the `places` table in scripts/build-service-area-map.cjs.
+            ['name' => 'Town of Walworth', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'lat' => 42.531, 'lon' => -88.599],
+            ['name' => 'Town of Delavan', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'lat' => 42.588, 'lon' => -88.572],
+            ['name' => 'City of Delavan', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'lat' => 42.6331, 'lon' => -88.6437],
+            ['name' => 'Town of Darien', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'lat' => 42.601, 'lon' => -88.708],
+            ['name' => 'Town of Sharon', 'county' => 'Walworth County', 'types' => ['Residential', 'Commercial', 'Roll-off'], 'lat' => 42.502, 'lon' => -88.729],
+            ['name' => 'Rock County', 'county' => 'Rock County', 'types' => ['Commercial', 'Roll-off'], 'lat' => null, 'lon' => null],
+            ['name' => 'Jefferson County', 'county' => 'Jefferson County', 'types' => ['Commercial', 'Roll-off'], 'lat' => null, 'lon' => null],
+            ['name' => 'Waukesha County', 'county' => 'Waukesha County', 'types' => ['Commercial', 'Roll-off'], 'lat' => null, 'lon' => null],
+            ['name' => 'Kenosha County', 'county' => 'Kenosha County', 'types' => ['Commercial', 'Roll-off'], 'lat' => null, 'lon' => null],
         ],
         'notices' => [
             ['title' => 'Service alerts and updates', 'type' => 'Announcement', 'date' => '2026-08-10', 'body' => 'No urgent service alerts are active. Weather delays, holiday schedule changes, closures, and route updates will be posted here.'],

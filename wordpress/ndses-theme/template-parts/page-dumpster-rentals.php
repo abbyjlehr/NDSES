@@ -3,7 +3,6 @@
     <div class="container">
         <div class="section-heading row-heading">
             <div>
-                <p class="eyebrow"><?php echo esc_html(ndses_sec('sizes', 'eyebrow', 'dumpster-rentals')); ?></p>
                 <h2><?php echo esc_html(ndses_sec('sizes', 'heading', 'dumpster-rentals')); ?></h2>
             </div>
             <?php ndses_button(ndses_sec('sizes', 'button', 'dumpster-rentals'), home_url('/dumpster-calculator'), 'button button-secondary'); ?>
@@ -26,7 +25,6 @@
 <section class="section">
     <div class="container">
         <div class="section-heading">
-            <p class="eyebrow"><?php echo esc_html(ndses_sec('process', 'eyebrow', 'dumpster-rentals')); ?></p>
             <h2><?php echo esc_html(ndses_sec('process', 'heading', 'dumpster-rentals')); ?></h2>
         </div>
         <div class="process-grid">
@@ -45,7 +43,6 @@
 <section class="section soft-section" id="quote">
     <div class="container split">
         <div>
-            <p class="eyebrow"><?php echo esc_html(ndses_sec('quote', 'eyebrow', 'dumpster-rentals')); ?></p>
             <h2><?php echo esc_html(ndses_sec('quote', 'heading', 'dumpster-rentals')); ?></h2>
             <p><?php echo esc_html(ndses_sec('quote', 'body', 'dumpster-rentals')); ?></p>
         </div>

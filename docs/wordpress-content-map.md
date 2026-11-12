@@ -9,7 +9,7 @@ The workbook has 17 worksheets and 25 embedded PNG media assets. Each worksheet 
 | Checklist | Project completeness checklist and launch QA notes |
 | Goals & Objectives | Theme design/UX requirements and homepage conversion priorities |
 | Websites Inspo | UI references for service sizing, calculator, alerts, and service-area map |
-| Integrations | Placeholder fields for Facebook, PayEngine, Google Maps, and calendar integrations |
+| Integrations | Placeholder fields for Facebook, PayEngine, and calendar integrations; the service-area map is a static county map driven by Service Area entries |
 | Calendars | Schedule/calendar ACF fields and future document/media assets |
 | Branding | Theme brand system, logo fields, and Media Library assets |
 | Photos & Media | Theme/Media Library image source inventory |
@@ -38,7 +38,6 @@ The workbook has 17 worksheets and 25 embedded PNG media assets. Each worksheet 
 - TODO: PayEngine - Live payment processing.
 - TODO: Form Backend - Production email/CRM submissions.
 - TODO: Facebook - Alerts auto-posting and social sync.
-- TODO: ACF - Live Google Maps polygons, plotted dots, and service-area lookup.
 - TODO: ACF - Final calendar integration for roll-off scheduling.
 
 ## Content Gaps To Confirm

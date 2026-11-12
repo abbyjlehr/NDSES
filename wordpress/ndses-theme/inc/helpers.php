@@ -21,6 +21,17 @@ function ndses_setting(string $key, mixed $fallback = ''): mixed
     return ndses_data()['settings'][$key] ?? $fallback;
 }
 
+/**
+ * Office hours as display lines, each ending in the time zone (NDS is in
+ * Delavan, WI: Central Time) unless the editor already wrote one.
+ */
+function ndses_hours_lines(): array
+{
+    return array_map(static function (string $line): string {
+        return preg_match('/\b(CT|CST|CDT|Central)\b/i', $line) ? $line : $line . ' CT';
+    }, ndses_lines(ndses_setting('hours', [])));
+}
+
 function ndses_page_field(string $field, mixed $fallback = ''): mixed
 {
     if (function_exists('get_field')) {

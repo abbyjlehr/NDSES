@@ -12,7 +12,7 @@ ndses_render_hero();
                 </article>
             <?php endwhile; ?>
         <?php else : ?>
-            <p>No content is available yet.</p>
+            <p>Nothing to show here. <a class="text-link" href="<?php echo esc_url(home_url('/')); ?>">Go to the home page</a></p>
         <?php endif; ?>
     </div>
 </section>

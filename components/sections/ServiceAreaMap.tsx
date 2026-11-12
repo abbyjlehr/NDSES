@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ServiceArea } from "@/types/cms";
-import { DETAIL_MAP, MAP_POSITIONS } from "@/lib/serviceAreaMap";
+import { DETAIL_MAP, projectMapPin } from "@/lib/serviceAreaMap";
 
 const typeLabels: Record<string, string> = { residential: "Residential", commercial: "Commercial", rollOff: "Roll-off" };
 
@@ -42,7 +42,9 @@ export function ServiceAreaMap({ areas }: { areas: ServiceArea[] }) {
               width={DETAIL_MAP.width}
             />
             {towns.map((area, index) => {
-              const position = MAP_POSITIONS[area.name] ?? area.coordinates ?? { x: 50, y: 50 };
+              // A town without coordinates, or outside the detail map, is listed without a pin.
+              const position = projectMapPin(area);
+              if (!position) return null;
               return (
                 <span aria-hidden className="map-pin" key={area.name} style={{ left: `${position.x}%`, top: `${position.y}%` }}>
                   <b>{index + 1}</b>

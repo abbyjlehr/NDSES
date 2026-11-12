@@ -43,7 +43,6 @@ function ndses_page_sections(): array
             'title' => 'Home',
             'sections' => [
                 'services' => ['label' => 'Our Services', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Our Services'],
                     'heading' => ['text', 'Heading', 'Choose the service you need'],
                     'card1_title' => ['text', 'Card 1 title (links to Residential)', $services[0]['title']],
                     'card1_body' => ['textarea', 'Card 1 text', $services[0]['body']],
@@ -53,19 +52,24 @@ function ndses_page_sections(): array
                     'card3_body' => ['textarea', 'Card 3 text', $services[2]['body']],
                     'link_label' => ['text', 'Card link text', 'Explore service'],
                 ]],
+                'autopay' => ['label' => 'Automatic Payments', 'fields' => [
+                    'heading' => ['text', 'Heading', 'Set up automatic payments'],
+                    'body' => ['textarea', 'Text', 'Pay your NDS bill automatically from your checking or savings account. Download the authorization form, fill it out, attach a voided check, and return it to the NDS office.'],
+                    'button' => ['text', 'Download button text', 'Download ACH form (PDF)'],
+                    'file' => ['file', 'ACH authorization form (PDF)', get_theme_file_uri('/assets/docs/nds-ach-authorization-form.pdf'), 'Upload a new PDF here to replace the form visitors download.'],
+                    'link_label' => ['text', 'Second link text', 'Or pay a bill online'],
+                ]],
                 'why' => ['label' => 'Why NDS', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Why NDS'],
                     'heading' => ['text', 'Heading', 'Waste solutions from a local team that knows the routes'],
                     'body' => ['textarea', 'Text', "We understand that effective waste management is critical to the quality of life in Wisconsin's towns and cities. Whether you're looking for dependable residential trash pickup or tailored commercial waste solutions, NDS is committed to responsive service."],
                     'mission_heading' => ['text', 'Mission box heading', 'Our Mission', $mission_note],
                 ]],
                 'sizes' => ['label' => 'Dumpster Sizes', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Dumpster Sizing'],
                     'heading' => ['text', 'Heading', 'Primary roll-off sizes at a glance'],
                     'button' => ['text', 'Button text', 'Open Calculator', 'The size cards come from Dumpster Sizes in the left menu.'],
                 ]],
                 'faq' => ['label' => 'FAQs', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Frequently Asked', 'The questions come from FAQs in the left menu (Dumpster Rentals category).'],
+                    'heading' => ['text', 'Heading', 'Frequently asked questions', 'The questions come from FAQs in the left menu (Dumpster Rentals category).'],
                 ]],
             ],
         ],
@@ -73,12 +77,10 @@ function ndses_page_sections(): array
             'title' => 'Residential',
             'sections' => [
                 'communities' => ['label' => 'Communities', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Community Schedules'],
                     'heading' => ['text', 'Heading', 'Select your community', 'The community cards come from Communities in the left menu.'],
                     'link_label' => ['text', 'Card link text', 'View details'],
                 ]],
                 'pickup' => ['label' => 'Pickup Expectations', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Pickup Expectations'],
                     'heading' => ['text', 'Heading', 'Simple rules that keep collection moving'],
                     'list' => ['list', 'Rules (one per line)', ['Bag all trash.', 'Place materials roadside by 5:30am.', 'Keep cans under 60 pounds.', 'Check the calendar for holiday delays.']],
                 ]],
@@ -92,7 +94,6 @@ function ndses_page_sections(): array
             'title' => 'Commercial',
             'sections' => [
                 'areas' => ['label' => 'Areas We Service', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Areas We Service'],
                     'heading' => ['text', 'Heading', 'Commercial service across select Southern Wisconsin counties'],
                     'list' => ['list', 'Counties (one per line)', ['Walworth County', 'Rock County', 'Jefferson County', 'Waukesha County', 'Kenosha County']],
                     'note' => ['textarea', 'Note under the list', 'We service select areas of each county. Please call {phone} to see if we service your area.', 'Write {phone} where the office phone number from Site Settings should appear.'],
@@ -103,7 +104,6 @@ function ndses_page_sections(): array
                     'list' => ['list', 'Schedules (one per line)', ['Monthly', 'Every other week', '2 times per week', '3 times per week', '4 times per week', '5 times per week']],
                 ]],
                 'containers' => ['label' => 'Container Options', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Container Options'],
                     'heading' => ['text', 'Heading', 'Find the right size dumpster for your business', 'The container cards come from Commercial Containers in the left menu.'],
                 ]],
                 'recycling' => ['label' => 'Commercial Recycling', 'fields' => [
@@ -116,7 +116,6 @@ function ndses_page_sections(): array
                     'list' => ['list', 'Industries (one per line)', ['Restaurants', 'Offices', 'Retail Stores', 'Apartment Complexes', 'Schools', 'Manufacturing', 'Churches']],
                 ]],
                 'quote' => ['label' => 'Quote Form', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Commercial Inquiry'],
                     'heading' => ['text', 'Heading', 'Need commercial service priced?'],
                     'body' => ['textarea', 'Text', 'Tell NDS about your business and the team will help choose the right container and schedule.'],
                 ]],
@@ -126,7 +125,6 @@ function ndses_page_sections(): array
             'title' => 'Dumpster Rentals',
             'sections' => [
                 'sizes' => ['label' => 'Size Guide', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Size Guide'],
                     'heading' => ['text', 'Heading', 'Find the right size dumpster for you', 'The size cards come from Dumpster Sizes in the left menu.'],
                     'button' => ['text', 'Button text', 'Use Calculator'],
                 ]],
@@ -137,7 +135,6 @@ function ndses_page_sections(): array
                     'not_list' => ['list', 'Not accepted materials (one per line)', $data['prohibited_materials']],
                 ]],
                 'process' => ['label' => 'Rental Process', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Rental Process'],
                     'heading' => ['text', 'Heading', 'Four simple steps'],
                     'step1_title' => ['text', 'Step 1 title', 'Request A Quote'],
                     'step1_body' => ['textarea', 'Step 1 text', 'Tell us about your project so we can help you find the dumpster that fits your needs.'],
@@ -149,7 +146,6 @@ function ndses_page_sections(): array
                     'step4_body' => ['textarea', 'Step 4 text', 'Call when you are done and NDS will haul everything away.'],
                 ]],
                 'quote' => ['label' => 'Quote Form', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Rental Inquiry'],
                     'heading' => ['text', 'Heading', 'Request a dumpster'],
                     'body' => ['textarea', 'Text', 'Arriving from "Request This Size"? The size you picked carries over automatically.'],
                 ]],
@@ -159,11 +155,14 @@ function ndses_page_sections(): array
             'title' => 'Dumpster Calculator',
             'sections' => [
                 'result' => ['label' => 'Recommendation Box', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Recommendation'],
+                    'eyebrow' => ['text', 'Label', 'Recommendation'],
                     'heading' => ['text', 'Starting heading', 'Start with the 15 Yard Dumpster', 'Shown before a visitor picks a project. After they click Recommend a Size, the heading shows the recommended size.'],
                     'body' => ['textarea', 'Starting text', 'Choose project details to update the recommendation. You can still compare all sizes below.'],
                     'note' => ['textarea', 'Small print', 'This is a 15 day rental. If you use a credit card for payment, there will be a 3% fee. Dumpster dimensions may vary based on different manufacturers.', 'Stays the same after a recommendation is shown.'],
                     'button' => ['text', 'Button text', 'Request Quote'],
+                ]],
+                'compare' => ['label' => 'Compare Sizes', 'fields' => [
+                    'heading' => ['text', 'Heading', 'Compare every dumpster size', 'The size cards come from Dumpster Sizes in the left menu.'],
                 ]],
             ],
         ],
@@ -171,7 +170,6 @@ function ndses_page_sections(): array
             'title' => 'Special Events',
             'sections' => [
                 'options' => ['label' => 'Event Options', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Options'],
                     'heading' => ['text', 'Heading', 'Event service support'],
                     'card1_title' => ['text', 'Card 1 title', 'Community events'],
                     'card1_body' => ['textarea', 'Card 1 text', 'Temporary container arrangements and collection planning.'],
@@ -181,7 +179,6 @@ function ndses_page_sections(): array
                     'card3_body' => ['textarea', 'Card 3 text', 'Post-event collection needs and removal timing managed through quote requests.'],
                 ]],
                 'quote' => ['label' => 'Quote Form', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Event Quote'],
                     'heading' => ['text', 'Heading', 'Plan containers and cleanup support'],
                     'body' => ['textarea', 'Text', 'Use this form for festivals, community events, corporate events, weddings, and temporary collection needs.'],
                 ]],
@@ -191,21 +188,19 @@ function ndses_page_sections(): array
             'title' => 'About',
             'sections' => [
                 'story' => ['label' => 'Our Story', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Our History'],
                     'heading' => ['text', 'Heading', 'Our Story', $story_note],
                     'mission_heading' => ['text', 'Mission box heading', 'Our Mission', $mission_note],
                 ]],
                 'team' => ['label' => 'Meet The Team', 'fields' => [
-                    'eyebrow' => ['text', 'Eyebrow', 'Meet The Team'],
-                    'heading' => ['text', 'Heading', 'Team profiles coming soon'],
+                    'heading' => ['text', 'Heading', 'Meet the team', 'This section stays hidden until at least one card below has text.'],
                     'member1_name' => ['text', 'Card 1 name or role', 'Leadership'],
-                    'member1_body' => ['textarea', 'Card 1 text', "We're putting together team profiles for this section — check back soon."],
+                    'member1_body' => ['textarea', 'Card 1 text', '', 'Leave empty to hide this card.'],
                     'member1_photo' => ['image', 'Card 1 photo', null],
                     'member2_name' => ['text', 'Card 2 name or role', 'Customer Service'],
-                    'member2_body' => ['textarea', 'Card 2 text', "We're putting together team profiles for this section — check back soon."],
+                    'member2_body' => ['textarea', 'Card 2 text', '', 'Leave empty to hide this card.'],
                     'member2_photo' => ['image', 'Card 2 photo', null],
                     'member3_name' => ['text', 'Card 3 name or role', 'Operations'],
-                    'member3_body' => ['textarea', 'Card 3 text', "We're putting together team profiles for this section — check back soon."],
+                    'member3_body' => ['textarea', 'Card 3 text', '', 'Leave empty to hide this card.'],
                     'member3_photo' => ['image', 'Card 3 photo', null],
                 ]],
             ],
@@ -314,6 +309,20 @@ function ndses_sec_image(string $section, string $field, ?string $slug = null): 
     return is_array($default) && !empty($default['url']) ? $default + ['alt' => '', 'width' => null, 'height' => null] : null;
 }
 
+/** URL for a section file field: the uploaded file, or the default. */
+function ndses_sec_file(string $section, string $field, ?string $slug = null): string
+{
+    $value = ndses_section_value($section, $field, $slug);
+    if (is_array($value) && !empty($value['url'])) {
+        return (string) $value['url'];
+    }
+    if (is_string($value) && filter_var($value, FILTER_VALIDATE_URL)) {
+        return $value;
+    }
+
+    return (string) (ndses_section_spec($section, $field, $slug)[2] ?? '');
+}
+
 /** Prints an <img> for a section image field, if there is one. */
 function ndses_sec_img(string $section, string $field, string $class, string $fallback_alt = '', ?string $slug = null): void
 {
@@ -365,7 +374,15 @@ function ndses_register_page_section_fields(): void
                     'name' => "{$section}_{$name}",
                     'instructions' => $spec[3] ?? '',
                 ];
-                if ($type === 'image') {
+                if ($type === 'file') {
+                    $field += [
+                        'type' => 'file',
+                        'return_format' => 'array',
+                        'library' => 'all',
+                        'mime_types' => 'pdf',
+                    ];
+                    $field['instructions'] = trim($field['instructions'] . ' Leave empty to keep the current file.');
+                } elseif ($type === 'image') {
                     $field += [
                         'type' => 'image',
                         'return_format' => 'array',
@@ -472,7 +489,7 @@ function ndses_prefill_hero_field(array $field): array
     $hero = ndses_data()['pages'][$slug] ?? null;
 
     if ($field['name'] === 'image' && $slug === 'home') {
-        $field['instructions'] = 'Not used on the Home page: the Home banner always shows the NDS truck photo behind the text.';
+        $field['instructions'] = 'Not used on the Home page: the Home banner always shows the NDS truck photo.';
     } elseif ($hero && isset($hero[$field['name']]) && is_string($hero[$field['name']])) {
         $field['default_value'] = $hero[$field['name']];
     }
@@ -483,3 +500,6 @@ foreach (['field_hero_eyebrow', 'field_hero_heading', 'field_hero_description', 
     add_filter('acf/load_field/key=' . $ndses_hero_key, 'ndses_prefill_hero_field');
 }
 unset($ndses_hero_key);
+
+/** Hero labels were removed from the design, so their field is hidden. */
+add_filter('acf/prepare_field/key=field_hero_eyebrow', '__return_false');

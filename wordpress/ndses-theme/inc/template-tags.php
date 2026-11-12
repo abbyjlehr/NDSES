@@ -20,38 +20,34 @@ function ndses_render_hero(?string $slug = null): void
     $width = is_array($image) ? ($image['width'] ?? null) : null;
     $height = is_array($image) ? ($image['height'] ?? null) : null;
 
-    // Home: the Delavan lakefront truck photo is always the full-bleed
-    // background behind the copy. The layout's green fade is tuned to where
-    // the truck sits in this photo, so the Home page's ACF Hero image is
-    // intentionally not used here (other pages still use theirs).
-    $photo_url = '';
-    if ($slug === 'home') {
-        $photo_url = ndses_asset('home-hero-truck.jpg');
-        $image_url = '';
+    $is_home = $slug === 'home';
+    $image_alt = ($hero['heading'] ?? 'NDS Environmental Solutions') . ' visual';
+
+    // Home: always the Delavan lakefront truck photo. The Home page's Hero
+    // image (and its built-in fallback, a sign proof) is intentionally not used.
+    if ($is_home) {
+        $image_url = ndses_asset('home-hero-truck.jpg');
+        $width = 1672;
+        $height = 941;
+        $image_alt = 'NDS Environmental Solutions garbage truck on a street in Delavan';
     }
     ?>
-    <section class="hero-section<?php echo $photo_url ? ' hero-section--photo' : ''; ?>">
-        <?php if ($photo_url) : ?>
-            <div class="hero-photo-frame" aria-hidden="true">
-                <img class="hero-photo" src="<?php echo esc_url($photo_url); ?>" alt="" width="1672" height="941" fetchpriority="high" decoding="async">
-            </div>
-        <?php endif; ?>
-        <div class="container hero-grid<?php echo $image_url ? '' : ' hero-grid--no-media'; ?><?php echo $photo_url ? ' hero-grid--photo' : ''; ?>">
+    <section class="hero-section<?php echo $is_home ? ' hero-section--home' : ''; ?>">
+        <div class="container hero-grid<?php echo $image_url ? '' : ' hero-grid--no-media'; ?>">
             <div class="hero-copy">
-                <p class="eyebrow"><?php echo esc_html($hero['eyebrow'] ?? 'NDS Environmental Solutions'); ?></p>
                 <h1><?php echo esc_html($hero['heading'] ?? get_the_title()); ?></h1>
                 <p class="hero-text"><?php echo esc_html($hero['description'] ?? ''); ?></p>
                 <div class="hero-actions">
                     <?php ndses_button('Get a Quote', home_url('/contact')); ?>
                     <?php ndses_button('Call NDS', ndses_phone_href(), 'button button-secondary'); ?>
-                    <?php if ($slug === 'home' || $slug === 'dumpster-rentals') : ?>
-                        <?php ndses_button('Rent a Dumpster', home_url('/dumpster-rentals'), 'button button-ghost'); ?>
+                    <?php if ($is_home || $slug === 'dumpster-rentals') : ?>
+                        <a class="text-link hero-link" href="<?php echo esc_url(home_url('/dumpster-rentals')); ?>">Rent a Dumpster</a>
                     <?php endif; ?>
                 </div>
             </div>
             <?php if ($image_url) : ?>
             <div class="hero-media">
-                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(($hero['heading'] ?? 'NDS Environmental Solutions') . ' visual'); ?>" <?php echo $width ? 'width="' . esc_attr((string) $width) . '"' : ''; ?> <?php echo $height ? 'height="' . esc_attr((string) $height) . '"' : ''; ?> fetchpriority="high" decoding="async">
+                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" <?php echo $width ? 'width="' . esc_attr((string) $width) . '"' : ''; ?> <?php echo $height ? 'height="' . esc_attr((string) $height) . '"' : ''; ?> fetchpriority="high" decoding="async">
             </div>
             <?php endif; ?>
         </div>
@@ -82,7 +78,6 @@ function ndses_render_service_cards(): void
     <section class="section">
         <div class="container">
             <div class="section-heading">
-                <p class="eyebrow"><?php echo esc_html(ndses_sec('services', 'eyebrow', 'home')); ?></p>
                 <h2><?php echo esc_html(ndses_sec('services', 'heading', 'home')); ?></h2>
             </div>
             <div class="card-grid three">
@@ -155,6 +150,11 @@ function ndses_render_dumpster_cards(): void
             $included = ndses_lines(get_field('included', $dumpster_post->ID)) ?: ndses_material_list_items($material_lists, 'Included');
             $image = get_field('field_ndses_image', $dumpster_post->ID);
             $image_url = is_array($image) && !empty($image['url']) ? $image['url'] : '';
+            // No graphic uploaded: use the theme's matching size graphic (10 Yard -> dumpster-10-yard.png).
+            if (!$image_url && preg_match('/\b(\d+)\s*yard/i', get_the_title($dumpster_post), $m)
+                && file_exists(get_theme_file_path('/assets/images/dumpster-' . $m[1] . '-yard.png'))) {
+                $image_url = ndses_asset('dumpster-' . $m[1] . '-yard.png');
+            }
             ?>
             <article class="feature-card dumpster-card">
                 <?php if ($image_url) : ?><img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title($dumpster_post)); ?>" loading="lazy" decoding="async"><?php endif; ?>
@@ -220,16 +220,20 @@ function ndses_render_inquiry_form(string $form_type): void
         'event' => 'Special Event Service',
     ][$form_type] ?? '';
     ?>
-    <form class="site-form" id="<?php echo esc_attr($form_type); ?>-inquiry-form" data-inquiry-form novalidate>
+    <form class="site-form" id="<?php echo esc_attr($form_type); ?>-inquiry-form" method="post" data-inquiry-form novalidate>
         <input type="hidden" name="formType" value="<?php echo esc_attr($form_type); ?>">
         <div class="honeypot-field" aria-hidden="true">
             <label for="<?php echo esc_attr($form_type); ?>-website">Leave this field blank</label>
             <input id="<?php echo esc_attr($form_type); ?>-website" type="text" name="website" tabindex="-1" autocomplete="off">
         </div>
-        <label>Name <input required type="text" name="name"></label>
-        <label>Email <input required type="email" name="email"></label>
-        <label>Phone <input required type="tel" name="phone"></label>
+        <label>Name <input required type="text" name="name" autocomplete="name"></label>
+        <div class="field-row">
+            <label>Email <input required type="email" name="email" autocomplete="email"></label>
+            <label>Phone <input required type="tel" name="phone" autocomplete="tel"></label>
+        </div>
         <label>Service address <input type="text" name="serviceAddress"></label>
+        <?php $has_pair = in_array($form_type, ['dumpster', 'event'], true); ?>
+        <?php if ($has_pair) : ?><div class="field-row"><?php endif; ?>
         <label>Service type
             <select required name="serviceType">
                 <?php foreach ($service_options as $value => $label) : ?>
@@ -243,11 +247,64 @@ function ndses_render_inquiry_form(string $form_type): void
         <?php if ($form_type === 'event') : ?>
             <label>Event date <input type="date" name="eventDate"></label>
         <?php endif; ?>
+        <?php if ($has_pair) : ?></div><?php endif; ?>
         <label>Message <textarea required minlength="10" name="message" rows="5"></textarea></label>
         <p class="form-status" role="status"></p>
         <button class="button button-primary" type="submit">Send Request</button>
     </form>
     <?php
+}
+
+/**
+ * Frame of the coverage map (assets/images/service-area-map.svg): its pixel
+ * size and the longitude/latitude range it was drawn with. Written by
+ * scripts/build-service-area-map.cjs next to the SVG, so regenerating the
+ * map regenerates these numbers.
+ *
+ * @return array{width:int,height:int,minLon:float,maxLon:float,minLat:float,maxLat:float}
+ */
+function ndses_map_bounds(): array
+{
+    static $bounds = null;
+    if ($bounds !== null) {
+        return $bounds;
+    }
+
+    $decoded = json_decode((string) @file_get_contents(get_theme_file_path('/assets/images/service-area-map-bounds.json')), true);
+    $bounds = [];
+    foreach (['width', 'height', 'minLon', 'maxLon', 'minLat', 'maxLat'] as $key) {
+        $bounds[$key] = is_array($decoded) && isset($decoded[$key]) && is_numeric($decoded[$key]) ? (float) $decoded[$key] : 0.0;
+    }
+    $bounds['width'] = (int) $bounds['width'];
+    $bounds['height'] = (int) $bounds['height'];
+
+    return $bounds;
+}
+
+/**
+ * Projects a latitude/longitude onto the coverage map as percentages of its
+ * width and height, with the same linear projection the build script uses
+ * to draw the SVG. Returns null for missing coordinates, a point outside
+ * the map, or an unreadable bounds file, so the caller lists the area
+ * without a pin.
+ *
+ * @return array{x:float,y:float}|null
+ */
+function ndses_project_map_pin(?float $lat, ?float $lon, array $bounds): ?array
+{
+    $lon_span = $bounds['maxLon'] - $bounds['minLon'];
+    $lat_span = $bounds['maxLat'] - $bounds['minLat'];
+    if ($lat === null || $lon === null || $lon_span <= 0 || $lat_span <= 0) {
+        return null;
+    }
+    if ($lon < $bounds['minLon'] || $lon > $bounds['maxLon'] || $lat < $bounds['minLat'] || $lat > $bounds['maxLat']) {
+        return null;
+    }
+
+    return [
+        'x' => round(($lon - $bounds['minLon']) / $lon_span * 100, 2),
+        'y' => round(($bounds['maxLat'] - $lat) / $lat_span * 100, 2),
+    ];
 }
 
 /**
@@ -262,44 +319,36 @@ function ndses_render_service_area_map(array $filter_types = []): void
         $areas = array_filter($areas, static fn ($area) => array_intersect($area['types'], $filter_types));
     }
 
-    // Real map of the service area (county outlines from US Census data,
-    // generated by scripts/build-service-area-map.cjs; same as the Next.js
-    // map). Counties are labeled on the map; towns get numbered pins that
-    // match the numbered list, so every name stays readable. Pin positions
-    // for known places are projected from their real coordinates; any
-    // other place falls back to its Map X/Y fields.
-    $positions = [
-        'City of Delavan' => ['x' => 31.1, 'y' => 28.16],
-        'Town of Delavan' => ['x' => 44.53, 'y' => 47.15],
-        'Town of Walworth' => ['x' => 39.47, 'y' => 71.14],
-        'Town of Darien' => ['x' => 19.05, 'y' => 41.68],
-        'Town of Sharon' => ['x' => 15.12, 'y' => 83.35],
-    ];
+    // One map of the service area (county outlines from US Census data,
+    // generated by scripts/build-service-area-map.cjs). Counties are labeled
+    // on the map; residential communities get small numbered pins inside the
+    // outlined residential area, matching the numbered list beside the map.
+    // Each pin is projected from the town's latitude/longitude using the
+    // bounds the build script publishes; a town without coordinates, or
+    // outside the map, is listed without a pin.
+    $bounds = ndses_map_bounds();
     $is_county = static fn (array $area): bool => (bool) preg_match('/county$/i', $area['name']);
     $towns = array_values(array_filter($areas, static fn ($area) => !$is_county($area)));
     $counties = array_values(array_filter($areas, $is_county));
     ?>
     <div class="service-map-wrap">
-        <div class="service-maps">
-            <figure class="service-map">
-                <img src="<?php echo ndses_asset('service-area-map.svg'); ?>" width="800" height="547" loading="lazy" decoding="async" alt="Map of southern Wisconsin showing the counties NDS serves: Walworth, Rock, Jefferson, Waukesha, and Kenosha">
-            </figure>
+        <figure class="service-map">
+            <div class="map-canvas">
+                <img src="<?php echo ndses_asset('service-area-map.svg'); ?>" width="<?php echo (int) ($bounds['width'] ?: 800); ?>" height="<?php echo (int) ($bounds['height'] ?: 547); ?>" loading="lazy" decoding="async" alt="Map of southern Wisconsin showing the counties NDS serves (Walworth, Rock, Jefferson, Waukesha, and Kenosha) and the residential service area in southwestern Walworth County">
+                <?php foreach ($towns as $index => $area) :
+                    $pos = ndses_project_map_pin($area['lat'] ?? null, $area['lon'] ?? null, $bounds);
+                    if (!$pos) {
+                        continue;
+                    }
+                    ?>
+                    <span class="map-pin" aria-hidden="true" style="left: <?php echo esc_attr((string) $pos['x']); ?>%; top: <?php echo esc_attr((string) $pos['y']); ?>%;"><b><?php echo (int) $index + 1; ?></b></span>
+                <?php endforeach; ?>
+            </div>
             <?php if ($towns) : ?>
-                <figure class="service-map service-map-detail">
-                    <div class="map-canvas">
-                        <img src="<?php echo ndses_asset('service-area-detail.svg'); ?>" width="800" height="486" loading="lazy" decoding="async" alt="Map of southern Walworth County with the residential communities NDS serves">
-                        <?php foreach ($towns as $index => $area) :
-                            $pos = $positions[$area['name']] ?? ['x' => $area['x'], 'y' => $area['y']];
-                            ?>
-                            <span class="map-pin" aria-hidden="true" style="left: <?php echo esc_attr((string) $pos['x']); ?>%; top: <?php echo esc_attr((string) $pos['y']); ?>%;"><b><?php echo (int) $index + 1; ?></b><span class="map-pin-label"><?php echo esc_html($area['name']); ?></span></span>
-                        <?php endforeach; ?>
-                    </div>
-                    <figcaption>Walworth County residential communities</figcaption>
-                </figure>
+                <figcaption><span class="map-key" aria-hidden="true"></span>Residential service area &middot; numbers match the list</figcaption>
             <?php endif; ?>
-        </div>
+        </figure>
         <div class="map-list">
-            <p class="eyebrow">Service Area</p>
             <h2>Southern Wisconsin coverage</h2>
             <p>Residential service is concentrated in listed communities. Commercial and temporary roll-off service is available in select areas of nearby counties.</p>
             <?php if ($towns) : ?>
