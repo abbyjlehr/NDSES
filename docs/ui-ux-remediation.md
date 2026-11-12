@@ -128,3 +128,37 @@ Same design system as the Next.js app, mapped onto the theme's own class names s
 
 Rollback: re-upload the 2.3.1 theme (`git archive 88a62fc:wordpress/ndses-theme`) through Appearance → Themes → Add New → Upload.
 
+
+## 7. Precision pass (theme 3.3.0, Oct 22, 2026)
+
+Audited the live site at 1440 / 1024 / 768 / 390 px with full-page screenshots plus an automated measurement script (control heights, sibling heights and element alignment in grid rows, one-word wrap lines, horizontal overflow). Fixes were checked the same way on a local WordPress copy.
+
+| Found on live | Fix |
+|---|---|
+| ~25 different spacing values (6, 7, 9, 10, 11, 14, 18, 22px…) | 4px spacing scale (`--space-1`…`--space-16`) plus shared `--control-h`, `--card-pad`, `--grid-gap`, `--stack-gap`; every component spacing value now uses them |
+| Payment: PayEngine fields 56px vs inputs 48px, different text inset, serif placeholder font | All controls exactly 48px; secure fields 48px box / 46px frame / 14px inset; system sans-serif inside PayEngine frames |
+| Payment: 943px form beside a 200px panel; plain radios; every field full width | Method tiles; grouped Account / Card / Bank details; paired rows (account + amount, exp + CVC + ZIP, first + last, routing + account); `$` prefix; sticky side panel with call-the-office line |
+| Dumpster cards: titles and truck loads wrapped to 2 lines; Dimensions/Includes rows misaligned | Card-sized type; list grows so notes and buttons align across a row; capped image frame |
+| Commercial containers: different card style, 96 Gallon heading 125px higher (no image) | Same card layout as dumpsters; placeholder frame and reserved capacity line when data is missing |
+| 5-card and 4-step grids left orphans (4 + 1, 3 + 1) | Five-up rows center the last row; process steps go 1 → 2 → 4 columns |
+| Sub-section h2s ("Commercial recycling", "Service Guidelines") as large as section titles; "Contact Card" and "Office Hours" the same size | Column/card headings use `--text-xl`; panel sub-headings `--text-md` |
+| Accepted / Not accepted cards different heights; long single-column lists | Side-by-side cards share height; long lists flow into two columns |
+| Calculator: result box shorter than form, buttons at different heights, unlabeled size section | Equal-height boxes with centered result; "Compare every dumpster size" heading (editable) |
+| Footer hours broke mid-time ("8:00am -" / "4:00pm") | Hours lines never wrap; footer columns rebalanced |
+| Contact sidebar was loose paragraphs | Labeled Office / Mailing / Phone / Email list and compact hours list |
+
+Remaining measurement flags are intentional: sticky sidebars and the map list are shorter than the content beside them.
+
+The Next.js app (not live) has not had this pass yet.
+
+## 8. Visual refresh: "clean & light" (theme 3.3.0)
+
+Direction chosen by the client: keep the NDS logo, green and gold, and all content; replace the dated dark-slab look.
+
+- **Tokens:** softer palette (`--green-50`, lighter lines), 16px cards / 24px panels / pill buttons (`--radius-pill`), layered soft shadows (`--shadow-xs`…`--shadow-lg`), focus ring token, larger display type with tighter tracking, more section breathing room.
+- **Header:** frosted translucent white bar; pill nav items with a tinted active state; dropdowns as rounded floating panels.
+- **Heroes:** light green-tinted wash on every page instead of dark green; Home shows the truck photo as a large rounded image beside the copy (stacks under 1100px); third action is a text link.
+- **Section labels:** pill chips with a gold dot instead of uppercase text with a rule.
+- **Cards, steps, FAQs, forms:** rounded, soft-shadow surfaces; hover lift on cards that link somewhere; 10px-radius inputs with a soft focus ring; FAQ page uses a pinned category title beside its questions on wide screens.
+- **Footer:** the call-to-action is a rounded gradient card straddling the page and the dark footer; mobile footer is shorter (link lists side by side, full-width actions).
+- Commercial recycling / industries and community guideline columns are now cards.

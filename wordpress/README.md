@@ -32,7 +32,7 @@ This folder contains the WordPress implementation path for the NDS Environmental
 
 ## Coverage Map
 
-The coverage map is a static SVG of the five service counties plus a zoomed Walworth County map, generated from US Census county outlines by `scripts/build-service-area-map.cjs` (no Google Maps, no API key). The script also writes `assets/images/service-area-detail-bounds.json`, the detail map's size and longitude/latitude range; the theme projects each Service Area's Latitude and Longitude onto the map with it at render time. To change the map, edit the script, re-run it as its header describes, and copy the SVGs it writes into `wordpress/ndses-theme/assets/images/` and `public/nds-assets/` (the bounds file is written there directly). The address check on the Dumpster Calculator matches the county of the typed address against the counties of the published Service Areas.
+The coverage map is a static SVG of the five service counties, generated from US Census county outlines by `scripts/build-service-area-map.cjs` (no Google Maps, no API key). The script also writes `assets/images/service-area-map-bounds.json`, the map's size and longitude/latitude range; the theme projects each Service Area's Latitude and Longitude onto the map with it at render time. (The script still draws a zoomed Walworth County map and its `service-area-detail-bounds.json` for the Next.js app.) To change the map, edit the script, re-run it as its header describes, and copy the SVGs it writes into `wordpress/ndses-theme/assets/images/` and `public/nds-assets/` (the bounds file is written there directly). The address check on the Dumpster Calculator matches the county of the typed address against the counties of the published Service Areas.
 
 ## Media
 

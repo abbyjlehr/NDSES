@@ -2,7 +2,6 @@
 <section class="section">
     <div class="container">
         <div class="section-heading">
-            <p class="eyebrow"><?php echo esc_html(ndses_sec('options', 'eyebrow', 'special-events')); ?></p>
             <h2><?php echo esc_html(ndses_sec('options', 'heading', 'special-events')); ?></h2>
         </div>
         <div class="card-grid three">
@@ -18,7 +17,6 @@
 <section class="section soft-section" id="quote">
     <div class="container split">
         <div>
-            <p class="eyebrow"><?php echo esc_html(ndses_sec('quote', 'eyebrow', 'special-events')); ?></p>
             <h2><?php echo esc_html(ndses_sec('quote', 'heading', 'special-events')); ?></h2>
             <p><?php echo esc_html(ndses_sec('quote', 'body', 'special-events')); ?></p>
         </div>

@@ -6,7 +6,7 @@
  */
 $ndses_nav = ndses_nav_items();
 $ndses_announcement = ndses_get_announcement();
-$ndses_hours = implode(' · ', ndses_lines(ndses_setting('hours', [])));
+$ndses_hours = implode(' · ', ndses_hours_lines());
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -18,10 +18,14 @@ $ndses_hours = implode(' · ', ndses_lines(ndses_setting('hours', [])));
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#main">Skip to content</a>
 <?php if ($ndses_announcement) : ?>
-    <div class="announcement" role="status">
-        <div class="container">
-            <strong><?php echo esc_html($ndses_announcement); ?></strong>
-            <a href="<?php echo esc_url(home_url('/whats-new')); ?>">View updates</a>
+    <div class="announcement" role="status" data-announcement="<?php echo esc_attr(substr(md5($ndses_announcement), 0, 12)); ?>">
+        <div class="container announcement-inner">
+            <svg class="announcement-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+            <p class="announcement-text"><?php echo esc_html($ndses_announcement); ?></p>
+            <a class="announcement-link" href="<?php echo esc_url(home_url('/whats-new')); ?>">View updates</a>
+            <button class="announcement-close" type="button" aria-label="Dismiss this alert" data-announcement-close>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
         </div>
     </div>
 <?php endif; ?>

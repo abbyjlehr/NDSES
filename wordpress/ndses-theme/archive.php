@@ -4,7 +4,6 @@ get_header();
 <section class="hero-section">
     <div class="container hero-grid">
         <div class="hero-copy">
-            <p class="eyebrow">NDS Environmental Solutions</p>
             <h1><?php the_archive_title(); ?></h1>
             <p class="hero-text"><?php the_archive_description(); ?></p>
         </div>

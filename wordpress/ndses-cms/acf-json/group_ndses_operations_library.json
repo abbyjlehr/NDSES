@@ -24,7 +24,7 @@
       "label": "Latitude",
       "name": "latitude",
       "type": "number",
-      "instructions": "Decimal degrees, for example 42.6331. Paste it from any map app (right-click the town in Google Maps and copy the first number). Only needed for a town shown on the Walworth County map; leave blank for counties.",
+      "instructions": "Decimal degrees, for example 42.6331. Paste it from any map app (right-click the town in Google Maps and copy the first number). Needed for each town so its numbered pin shows on the service-area map; leave blank for counties.",
       "required": 0,
       "step": "any",
       "min": -90,
@@ -35,7 +35,7 @@
       "label": "Longitude",
       "name": "longitude",
       "type": "number",
-      "instructions": "Decimal degrees, for example -88.6437 (negative in Wisconsin). Paste it from the same map app as the latitude. Only needed for a town shown on the Walworth County map; leave blank for counties.",
+      "instructions": "Decimal degrees, for example -88.6437 (negative in Wisconsin). Paste it from the same map app as the latitude. Needed for each town so its numbered pin shows on the service-area map; leave blank for counties.",
       "required": 0,
       "step": "any",
       "min": -180,
@@ -90,5 +90,5 @@
   ],
   "show_in_rest": 1,
   "active": true,
-  "modified": 1793980800
+  "modified": 1794460892
 }

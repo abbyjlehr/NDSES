@@ -22,7 +22,7 @@
             <button class="button button-primary" type="submit">Recommend a Size</button>
         </form>
         <aside class="calculator-result" aria-live="polite">
-            <p class="eyebrow"><?php echo esc_html(ndses_sec('result', 'eyebrow', 'dumpster-calculator')); ?></p>
+            <p class="result-label"><?php echo esc_html(ndses_sec('result', 'eyebrow', 'dumpster-calculator')); ?></p>
             <h2><?php echo esc_html(ndses_sec('result', 'heading', 'dumpster-calculator')); ?></h2>
             <p><?php echo esc_html(ndses_sec('result', 'body', 'dumpster-calculator')); ?></p>
             <p class="small-note"><?php echo esc_html(ndses_sec('result', 'note', 'dumpster-calculator')); ?></p>
@@ -32,6 +32,9 @@
 </section>
 <section class="section soft-section">
     <div class="container">
+        <div class="section-heading">
+            <h2><?php echo esc_html(ndses_sec('compare', 'heading', 'dumpster-calculator')); ?></h2>
+        </div>
         <?php ndses_render_dumpster_cards(); ?>
     </div>
 </section>
