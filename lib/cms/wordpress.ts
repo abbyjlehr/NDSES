@@ -307,13 +307,15 @@ export async function getWordPressServiceAreas(fallback: ServiceArea[] = []): Pr
   return posts.map((post) => {
     const base = fallback.find((item) => item.name === titleOf(post));
     const acf = asRecord(post.acf);
-    const x = Number(acf.map_x);
-    const y = Number(acf.map_y);
+    // ACF returns an empty string for a blank number field; only a real number counts.
+    const coordinate = (value: unknown) => (value === "" || value == null || !Number.isFinite(Number(value)) ? undefined : Number(value));
+    const latitude = coordinate(acf.latitude);
+    const longitude = coordinate(acf.longitude);
     return {
       name: titleOf(post, base?.name),
       county: asString(acf.county, base?.county),
       serviceTypes: asStringArray(acf.service_types, base?.serviceTypes) as ServiceArea["serviceTypes"],
-      coordinates: Number.isFinite(x) && Number.isFinite(y) ? { x, y } : base?.coordinates
+      ...(latitude !== undefined && longitude !== undefined ? { latitude, longitude } : {})
     };
   });
 }

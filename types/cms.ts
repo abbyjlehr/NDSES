@@ -148,7 +148,9 @@ export type ServiceArea = {
   name: string;
   county: string;
   serviceTypes: Array<"residential" | "commercial" | "rollOff">;
-  coordinates?: { x: number; y: number };
+  /** Decimal degrees. Only towns pinned on the Walworth County detail map carry them. */
+  latitude?: number;
+  longitude?: number;
 };
 
 export type ScheduleItem = {

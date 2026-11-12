@@ -81,6 +81,81 @@ ${label("Illinois", W - 16, py(42.4925) + 18, 12, 'text-anchor="end"')}
 </g>
 </svg>`;
 
+// Walworth County detail: the residential communities sit within a few
+// miles of each other, so their pins go on a zoomed map of the county.
+const walworth = service.find((f) => f.id === "55127");
+const wc = []; const ww = (c) => (typeof c[0] === "number" ? wc.push(c) : c.forEach(ww)); ww(walworth.geometry.coordinates);
+const dPad = 0.03;
+const dMinLon = Math.min(...wc.map((c) => c[0])) - dPad, dMaxLon = Math.max(...wc.map((c) => c[0])) + dPad;
+// Crop to the southern part of the county, where the communities are.
+const dMinLat = Math.min(...wc.map((c) => c[1])) - dPad, dMaxLat = 42.70;
+const DW = 800;
+
+const DH = Math.round(DW * (dMaxLat - dMinLat) / ((dMaxLon - dMinLon) * k));
+const dx = (lon) => ((lon - dMinLon) / (dMaxLon - dMinLon)) * DW;
+const dy = (lat) => ((dMaxLat - lat) / (dMaxLat - dMinLat)) * DH;
+const miles5 = (5 / (69.17 * k)) / (dMaxLon - dMinLon) * DW;
+const dPath = (geom) => {
+  const rings = geom.type === "Polygon" ? [geom.coordinates] : geom.coordinates;
+  return rings.map((poly) => poly.map((ring) => "M" + ring.map(([lo, la]) => `${dx(lo).toFixed(1)},${dy(la).toFixed(1)}`).join("L") + "Z").join("")).join("");
+};
+const neighbors = [...service, ...context].filter((f) => f.id !== "55127");
+const detailSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${DW} ${DH}" role="img" aria-label="Map of Walworth County, Wisconsin, with the residential communities NDS serves">
+<rect width="${DW}" height="${DH}" fill="#e7ece4"/>
+<g fill="#e7ece4" stroke="#c9d3c6" stroke-width="1.5">${neighbors.map((f) => `<path d="${dPath(f.geometry)}"/>`).join("")}</g>
+<path d="${dPath(walworth.geometry)}" fill="#cfe1cb" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+<path d="${lineOf(stateLine).replace(/[\d.]+,[\d.]+/g, (pair) => { const [x, y] = pair.split(",").map(Number); const lon = minLon + (x / W) * (maxLon - minLon); const lat = maxLat - (y / H) * (maxLat - minLat); return `${dx(lon).toFixed(1)},${dy(lat).toFixed(1)}`; })}" fill="none" stroke="#8a9a8d" stroke-width="2" stroke-dasharray="8 6"/>
+<g font-family="Archivo, Arial Narrow, Arial, sans-serif" font-weight="700" font-size="22" fill="#0f3d25" fill-opacity="0.5" letter-spacing="0.08em"><text x="${(dx(-88.765)).toFixed(1)}" y="${(dy(42.69) + 34).toFixed(1)}">WALWORTH COUNTY</text></g>
+<g font-family="Public Sans, Arial, sans-serif" font-size="14" font-weight="700" fill="#56655b" letter-spacing="0.12em"><text x="${DW - 24}" y="${(dy(42.4925) + 26).toFixed(1)}" text-anchor="end">ILLINOIS</text></g>
+<g transform="translate(${(DW - miles5 - 110).toFixed(1)} 34)" fill="#33433a" font-family="Public Sans, Arial, sans-serif" font-size="14" font-weight="700">
+<rect x="0" y="0" width="${miles5.toFixed(1)}" height="6" fill="#33433a"/><rect x="${(miles5 / 2).toFixed(1)}" y="0" width="${(miles5 / 2).toFixed(1)}" height="6" fill="#ffffff" stroke="#33433a"/>
+<text x="0" y="24">0</text><text x="${miles5.toFixed(1)}" y="24" text-anchor="end">5 mi</text>
+<g transform="translate(${(miles5 + 40).toFixed(1)} -8)"><path d="M0 22 L9 0 L18 22 L9 16 Z" fill="#33433a"/><text x="9" y="40" text-anchor="middle">N</text></g>
+</g>
+</svg>`;
+// The detail map's frame. The Next.js app (lib/serviceAreaMap.ts) reads this
+// file and projects each Service Area's latitude/longitude onto the detail
+// SVG with the same linear projection as dx()/dy() above, so a town added in
+// WordPress lands at the right spot.
+// Regenerating the map regenerates the bounds alongside it.
+const bounds = {
+  width: DW,
+  height: DH,
+  minLon: +dMinLon.toFixed(6),
+  maxLon: +dMaxLon.toFixed(6),
+  minLat: +dMinLat.toFixed(6),
+  maxLat: +dMaxLat.toFixed(6)
+};
+const root = path.join(__dirname, "..");
+for (const dir of ["wordpress/ndses-theme/assets/images", "public/nds-assets"]) {
+  fs.writeFileSync(path.join(root, dir, "service-area-detail-bounds.json"), JSON.stringify(bounds, null, 2) + "\n");
+}
+console.log("detail bounds", JSON.stringify(bounds));
+
+// Reference only: where the seeded towns land on the detail map, as percent
+// of width/height. The app computes these at render time now.
+const detail = {};
+for (const [name, [lo, la]] of Object.entries(places)) detail[name] = { x: +(dx(lo) / DW * 100).toFixed(2), y: +(dy(la) / DH * 100).toFixed(2) };
+fs.writeFileSync(path.join(__dirname, "service-area-detail.svg"), detailSvg);
+console.log("detail", DW, "x", DH, JSON.stringify(detail));
+
+// Frame of the main map above (service-area-map.svg), which the WordPress
+// theme draws its pins on (inc/template-tags.php). Same shape as the
+// detail bounds; px()/py() are linear in longitude/latitude.
+const mapBounds = {
+  width: W,
+  height: H,
+  minLon: +minLon.toFixed(6),
+  maxLon: +maxLon.toFixed(6),
+  minLat: +minLat.toFixed(6),
+  maxLat: +maxLat.toFixed(6)
+};
+for (const dir of ["wordpress/ndses-theme/assets/images", "public/nds-assets"]) {
+  fs.writeFileSync(path.join(root, dir, "service-area-map-bounds.json"), JSON.stringify(mapBounds, null, 2) + "\n");
+}
+console.log("map bounds", JSON.stringify(mapBounds));
+
+// Copy the SVGs to public/nds-assets/ and wordpress/ndses-theme/assets/images/.
 fs.writeFileSync(path.join(__dirname, "service-area-map.svg"), svg);
 fs.writeFileSync(path.join(__dirname, "positions.json"), JSON.stringify({ width: W, height: H, positions }, null, 2));
 console.log("size", W, "x", H, "svg bytes", svg.length);

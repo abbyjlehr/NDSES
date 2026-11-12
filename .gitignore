@@ -12,3 +12,4 @@ test-results
 playwright-report
 scripts/positions.json
 scripts/service-area-map.svg
+scripts/service-area-detail.svg

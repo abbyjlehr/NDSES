@@ -411,15 +411,16 @@ export const commercialContainers: CommercialContainer[] = [
 ];
 
 export const serviceAreas: ServiceArea[] = [
-  { name: "Town of Walworth", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], coordinates: { x: 49, y: 45 } },
-  { name: "Town of Delavan", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], coordinates: { x: 54, y: 57 } },
-  { name: "City of Delavan", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], coordinates: { x: 58, y: 54 } },
-  { name: "Town of Darien", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], coordinates: { x: 38, y: 42 } },
-  { name: "Town of Sharon", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], coordinates: { x: 46, y: 70 } },
-  { name: "Rock County", county: "Rock County", serviceTypes: ["commercial", "rollOff"], coordinates: { x: 26, y: 63 } },
-  { name: "Jefferson County", county: "Jefferson County", serviceTypes: ["commercial", "rollOff"], coordinates: { x: 56, y: 26 } },
-  { name: "Waukesha County", county: "Waukesha County", serviceTypes: ["commercial", "rollOff"], coordinates: { x: 76, y: 24 } },
-  { name: "Kenosha County", county: "Kenosha County", serviceTypes: ["commercial", "rollOff"], coordinates: { x: 82, y: 72 } }
+  // Town coordinates match the `places` table in scripts/build-service-area-map.cjs.
+  { name: "Town of Walworth", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], latitude: 42.531, longitude: -88.599 },
+  { name: "Town of Delavan", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], latitude: 42.588, longitude: -88.572 },
+  { name: "City of Delavan", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], latitude: 42.6331, longitude: -88.6437 },
+  { name: "Town of Darien", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], latitude: 42.601, longitude: -88.708 },
+  { name: "Town of Sharon", county: "Walworth County", serviceTypes: ["residential", "commercial", "rollOff"], latitude: 42.502, longitude: -88.729 },
+  { name: "Rock County", county: "Rock County", serviceTypes: ["commercial", "rollOff"] },
+  { name: "Jefferson County", county: "Jefferson County", serviceTypes: ["commercial", "rollOff"] },
+  { name: "Waukesha County", county: "Waukesha County", serviceTypes: ["commercial", "rollOff"] },
+  { name: "Kenosha County", county: "Kenosha County", serviceTypes: ["commercial", "rollOff"] }
 ];
 
 export const scheduleItems: ScheduleItem[] = [
