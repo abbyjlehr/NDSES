@@ -16,7 +16,7 @@ $ndses_icon = static fn (string $path): string => '<svg width="17" height="17" v
             </div>
             <div class="footer-cta-actions">
                 <?php ndses_button(ndses_setting('phone'), ndses_phone_href(), 'button button-gold'); ?>
-                <?php ndses_button('Request a Quote', home_url('/contact'), 'button button-on-dark'); ?>
+                <?php ndses_button('Request a Quote', home_url('/contact/'), 'button button-on-dark'); ?>
             </div>
         </div>
     </div>
@@ -44,22 +44,22 @@ $ndses_icon = static fn (string $path): string => '<svg width="17" height="17" v
         <div>
             <h3>Services</h3>
             <ul class="footer-links">
-                <li><a href="<?php echo esc_url(home_url('/residential')); ?>">Residential</a></li>
-                <li><a href="<?php echo esc_url(home_url('/commercial')); ?>">Commercial</a></li>
-                <li><a href="<?php echo esc_url(home_url('/dumpster-rentals')); ?>">Dumpster Rentals</a></li>
-                <li><a href="<?php echo esc_url(home_url('/dumpster-calculator')); ?>">Dumpster Calculator</a></li>
-                <li><a href="<?php echo esc_url(home_url('/special-events')); ?>">Special Events</a></li>
+                <li><a href="<?php echo esc_url(home_url('/residential/')); ?>">Residential</a></li>
+                <li><a href="<?php echo esc_url(home_url('/commercial/')); ?>">Commercial</a></li>
+                <li><a href="<?php echo esc_url(home_url('/dumpster-rentals/')); ?>">Dumpster Rentals</a></li>
+                <li><a href="<?php echo esc_url(home_url('/dumpster-calculator/')); ?>">Dumpster Calculator</a></li>
+                <li><a href="<?php echo esc_url(home_url('/special-events/')); ?>">Special Events</a></li>
             </ul>
         </div>
 
         <div>
             <h3>Customers</h3>
             <ul class="footer-links">
-                <li><a href="<?php echo esc_url(home_url('/make-a-payment')); ?>">Pay Your Bill</a></li>
-                <li><a href="<?php echo esc_url(home_url('/whats-new')); ?>">Service Alerts</a></li>
-                <li><a href="<?php echo esc_url(home_url('/faqs')); ?>">FAQs</a></li>
-                <li><a href="<?php echo esc_url(home_url('/about')); ?>">About NDS</a></li>
-                <li><a href="<?php echo esc_url(home_url('/contact')); ?>">Contact</a></li>
+                <li><a href="<?php echo esc_url(home_url('/make-a-payment/')); ?>">Pay Your Bill</a></li>
+                <li><a href="<?php echo esc_url(home_url('/whats-new/')); ?>">Service Alerts</a></li>
+                <li><a href="<?php echo esc_url(home_url('/faqs/')); ?>">FAQs</a></li>
+                <li><a href="<?php echo esc_url(home_url('/about/')); ?>">About NDS</a></li>
+                <li><a href="<?php echo esc_url(home_url('/contact/')); ?>">Contact</a></li>
             </ul>
             <?php if ($ndses_social) : ?>
                 <ul class="footer-social">
@@ -75,9 +75,9 @@ $ndses_icon = static fn (string $path): string => '<svg width="17" height="17" v
         <div class="container footer-bottom-inner">
             <p><?php echo esc_html(ndses_setting('copyright_text', 'Copyright ' . date('Y') . ' NDS Environmental Solutions, LLC. All rights reserved.')); ?></p>
             <ul>
-                <li><a href="<?php echo esc_url(home_url('/privacy-policy')); ?>">Privacy Policy</a></li>
-                <li><a href="<?php echo esc_url(home_url('/terms')); ?>">Terms &amp; Content Sources</a></li>
-                <li><a href="<?php echo esc_url(home_url('/photo-credits')); ?>">Photo Credits</a></li>
+                <li><a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a></li>
+                <li><a href="<?php echo esc_url(home_url('/terms/')); ?>">Terms &amp; Content Sources</a></li>
+                <li><a href="<?php echo esc_url(home_url('/photo-credits/')); ?>">Photo Credits</a></li>
             </ul>
         </div>
     </div>
