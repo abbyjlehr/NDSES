@@ -22,7 +22,7 @@ $ndses_hours = implode(' · ', ndses_hours_lines());
         <div class="container announcement-inner">
             <svg class="announcement-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
             <p class="announcement-text"><?php echo esc_html($ndses_announcement); ?></p>
-            <a class="announcement-link" href="<?php echo esc_url(home_url('/whats-new')); ?>">View updates</a>
+            <a class="announcement-link" href="<?php echo esc_url(home_url('/whats-new/')); ?>">View updates</a>
             <button class="announcement-close" type="button" aria-label="Dismiss this alert" data-announcement-close>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
             </button>
@@ -82,8 +82,8 @@ $ndses_hours = implode(' · ', ndses_hours_lines());
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
                     <span><?php echo esc_html(ndses_setting('phone')); ?></span>
                 </a>
-                <?php ndses_button('Get a Quote', home_url('/contact'), 'button button-outline button-small'); ?>
-                <?php ndses_button('Pay Bill', home_url('/make-a-payment'), 'button button-primary button-small'); ?>
+                <?php ndses_button('Get a Quote', home_url('/contact/'), 'button button-outline button-small'); ?>
+                <?php ndses_button('Pay Bill', home_url('/make-a-payment/'), 'button button-primary button-small'); ?>
             </div>
 
             <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu-toggle>
@@ -117,8 +117,8 @@ $ndses_hours = implode(' · ', ndses_hours_lines());
         </nav>
         <div class="mobile-nav-actions">
             <?php ndses_button('Call ' . ndses_setting('phone'), ndses_phone_href(), 'button button-outline'); ?>
-            <?php ndses_button('Get a Quote', home_url('/contact'), 'button button-outline'); ?>
-            <?php ndses_button('Pay Bill', home_url('/make-a-payment'), 'button button-primary'); ?>
+            <?php ndses_button('Get a Quote', home_url('/contact/'), 'button button-outline'); ?>
+            <?php ndses_button('Pay Bill', home_url('/make-a-payment/'), 'button button-primary'); ?>
         </div>
     </div>
 </header>

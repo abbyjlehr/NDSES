@@ -13,7 +13,7 @@ Images were extracted from the client-supplied NDS Website Redesign workbook for
 
 Source: client-supplied `Updated Dumpster Images 10.2026.xlsx`. Commercial containers: 2, 4, 6, 8 yard. Roll-off: 10, 12, 15, 20, 30 yard.
 
-- `/nds-assets/dumpster-2-yard.png` — 2 yard dumpster dimension graphic
+- `/nds-assets/dumpster-2-yard.webp` — 2 yard dumpster dimension graphic (WebP, 33 KB)
 - `/nds-assets/dumpster-4-yard.png` — 4 yard dumpster dimension graphic
 - `/nds-assets/dumpster-6-yard.png` — 6 yard dumpster dimension graphic
 - `/nds-assets/dumpster-8-yard.png` — 8 yard dumpster dimension graphic

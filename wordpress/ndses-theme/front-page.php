@@ -18,7 +18,7 @@ ndses_render_service_cards();
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
                     <?php echo esc_html(ndses_sec('autopay', 'button', 'home')); ?>
                 </a>
-                <a class="text-link" href="<?php echo esc_url(home_url('/make-a-payment')); ?>"><?php echo esc_html(ndses_sec('autopay', 'link_label', 'home')); ?></a>
+                <a class="text-link" href="<?php echo esc_url(home_url('/make-a-payment/')); ?>"><?php echo esc_html(ndses_sec('autopay', 'link_label', 'home')); ?></a>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@ ndses_render_service_cards();
             <div>
                 <h2><?php echo esc_html(ndses_sec('sizes', 'heading', 'home')); ?></h2>
             </div>
-            <?php ndses_button(ndses_sec('sizes', 'button', 'home'), home_url('/dumpster-calculator'), 'button button-secondary'); ?>
+            <?php ndses_button(ndses_sec('sizes', 'button', 'home'), home_url('/dumpster-calculator/'), 'button button-secondary'); ?>
         </div>
         <?php ndses_render_dumpster_cards(); ?>
     </div>
