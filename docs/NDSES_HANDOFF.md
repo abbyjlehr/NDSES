@@ -57,4 +57,4 @@ Make sure an NDSES owner (not only the developer) can sign in to each of these. 
 
 New pages or layout changes, adding a new community, changing recycling or bulk-item lists, payment or PayEngine problems, error messages, or access problems.
 
-**Developer:** Abby Lehr, abby.lehr@radicalsurfaces.com
+**Developer:** Abby Lehr, ajlehr123@gmail.com
