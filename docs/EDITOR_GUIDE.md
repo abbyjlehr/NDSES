@@ -40,7 +40,7 @@ A few things that are true everywhere:
 - **Changes appear on the live site within a few minutes**, not instantly. If you don't see your change right away, wait 5 minutes and refresh. (See [Common Questions](#common-questions) if it still hasn't shown up.)
 - **Required fields are marked** and the Publish button will tell you if something's missing.
 
-**Where the edit boxes are.** The main site pages (Home, Residential, Commercial, Dumpster Rentals, Dumpster Calculator, Special Events, About, Make a Payment, Contact) open as a simple form: **Page Hero & SEO** at the top, then **[Page name] Page Sections** with one tab per section. On other screens (Dumpster Sizes, FAQs, Communities, Privacy Policy, Terms, and so on) WordPress shows its page editor first, and the editable boxes sit in the **Meta Boxes** panel at the bottom of the screen. Drag the small grey bar at the top of that panel upward to give it more room, or scroll inside it. The **Update** or **Save** button (or **Publish**, for a brand-new entry) is the blue button at the top right. Site Settings is a plain form with a **Save Settings** button at the bottom.
+**Where the edit boxes are.** The main site pages (Home, Residential, Commercial, Dumpster Rentals, Dumpster Calculator, Special Events, About, Make a Payment, Contact) open as a simple form: **Page Hero & SEO** at the top, then **[Page name] Page Sections** with one tab per section. Dumpster Sizes, Commercial Containers, FAQs, Communities, Service Areas, and Service Notices open as a plain form too, with their boxes in the middle of the screen. Only free-form pages like Privacy Policy and Terms open in WordPress's block editor. The blue button at the top right saves: it says **Publish** on a brand-new entry and **Update** on an existing one. To start a new entry, use the **Add Post** link under that menu (WordPress labels it "Add Post" on every list, not just Posts). Site Settings is a plain form with a **Save Settings** button at the bottom.
 
 **After every change:** wait about 5 minutes, then open the page on the live site and hard-refresh (Cmd+Shift+R on Mac, Ctrl+Shift+R on Windows) to see it.
 
@@ -121,7 +121,7 @@ This is the one screen that controls information shown across the *entire* site 
 | Facebook URL / Instagram URL | Powers the social icons in the footer |
 | Header Logo / Footer Logo | Upload a new logo image to replace either |
 | Footer Description | The short blurb under your logo in the footer |
-| Copyright Text | The line at the very bottom of every page |
+| Copyright Text | The line at the very bottom of every page. It also carries the note that some images are AI-generated; keep that sentence while those pictures are on the site |
 | Mission Statement | The "Our Mission" box on the Home and About pages |
 | About Page: Our Story | The company history on the About page. Leave blank to keep the current text |
 
@@ -133,7 +133,7 @@ At the bottom of this screen you'll also see a few **Integration Status** fields
 
 Each main page has two boxes, top to bottom, in the same order you see them on the website:
 
-1. **Page Hero & SEO** — the big banner at the top (eyebrow, heading, description, optional image) plus the text search engines show (SEO Title, SEO Description).
+1. **Page Hero & SEO** — the big banner at the top (heading, description, optional image) plus the text search engines show (SEO Title, SEO Description).
 2. **[Page name] Page Sections** — one **tab per section** of the page, left to right in the order the sections appear going down the page. Each tab holds that section's eyebrow (small line above the heading), heading, text, lists, button text, and images.
 
 Every box starts filled in with what the website shows today, so you only change what you want to change.
@@ -142,11 +142,13 @@ Every box starts filled in with what the website shows today, so you only change
 
 **How to update a page banner**
 1. In the left menu, click **Pages**, then click the page's name (for example **About**).
-2. In **Page Hero & SEO**, change the **Eyebrow**, **Heading**, or **Description**.
+2. In **Page Hero & SEO**, change the **Heading** or **Description**.
 3. To change the picture, click **Add Image** (or the current image), choose or upload one, then click **Select**.
 4. Click **Update** at the top right.
 
-> **Home page:** the truck-by-the-lake background photo is built into the design (the green fade is lined up with where the truck sits), so the Home page's Hero **Image** box has no effect. Its eyebrow, heading, and description still work. To change the home photo, contact your developer.
+> **Home page:** the truck-by-the-lake photo is built into the design, so the Home page's Hero **Image** box has no effect. Its heading and description still work. To change the home photo, contact your developer.
+
+> **About the banner pictures:** the pictures on Residential, Commercial, Dumpster Rentals, Special Events, About, and Contact are AI-generated illustrations, and the **Photo Credits** page (Pages → Photo Credits) says so. If you swap one for a real photo of NDS, update that list too, or remove the line for that page.
 
 **How to update a section of a page**
 1. In the left menu, click **Pages**, then click the page's name.
@@ -171,7 +173,7 @@ What's in each page's tabs:
 
 A few things live in their own menus instead, and each tab says so where it applies: the dumpster size cards (**Dumpster Sizes**), commercial container cards (**Commercial Containers**), FAQs (**FAQs**), community cards (**Communities**), the service area map (**Service Areas**), and the phone, email, hours, mission statement, and Our Story text (**Site Settings**). In a note, write `{phone}` where the office phone number should appear and the site fills it in from Site Settings.
 
-**Special Events, Privacy Policy, and Terms** are ordinary pages edited the same way as any other page listed above — Special Events also has its own inquiry form (formType "event") like Commercial and Dumpster Rentals do. Privacy Policy and Terms currently hold placeholder legal text pending formal review — replace it with NDSES's actual reviewed policy before relying on it.
+**Special Events, Privacy Policy, and Terms** are ordinary pages edited the same way as any other page listed above — Special Events also has its own inquiry form (formType "event") like Commercial and Dumpster Rentals do. Privacy Policy and Terms hold the text NDS approved in November 2026; if either policy changes, edit the page the same way.
 
 ## Managing Communities (Residential Service Areas)
 
@@ -186,7 +188,7 @@ One entry per town/city you service (e.g. Town of Walworth, City of Delavan). Ea
 **How to change a pickup day or schedule**
 1. In the left menu, click **Communities**, then click the town (for example **Town of Walworth**).
 2. Change **Service Day**, **Trash Schedule**, or **Recycling Schedule**.
-3. Click **Save**. Ignore the other boxes on this screen (Content Items, Material Lists, Capacity, and so on); communities don't use them.
+3. Click **Update**. Ignore the other boxes on this screen (Content Items, Material Lists, Capacity, and so on); communities don't use them.
 
 The entry's **slug** (the part of its URL, e.g. `town-of-walworth`) must match the community's existing page address for its schedule to show. The five current communities are Town of Walworth, Town of Delavan, City of Delavan, Town of Darien, and Town of Sharon. Adding a brand-new community, or changing its recycling and bulk-item lists, is a developer change.
 
@@ -202,13 +204,13 @@ One entry per roll-off size you offer (10 Yard, 12 Yard, 15 Yard, 20 Yard, 30 Ya
 
 **How to update a dumpster size**
 1. In the left menu, click **Dumpster Sizes**, then click the size (for example **15 Yard Dumpster**).
-2. In the **Meta Boxes** panel, update **Truck Loads** (shown on the card; Capacity is used if it's blank), **Dimensions**, and **Image** (the dimension graphic).
+2. Update **Truck Loads** (shown on the card; Capacity is used if it's blank), **Dimensions**, and **Image** (the dimension graphic).
 3. Scroll to **Dumpster Size Lists**. Type the **Ideal For** projects and the **Included** items, one per line.
-4. Click **Save**.
+4. Click **Update**.
 
-**To add a size,** click **Dumpster Sizes → Add New**, type the title (for example "12 Yard Dumpster"), fill in the same boxes, set its **Order** number, and click **Publish**.
+**To add a size,** click **Dumpster Sizes → Add Post**, type the title (for example "40 Yard Dumpster"), fill in the same boxes, set its **Order** number, and click **Publish**.
 
-> **Important:** the site shows exactly the sizes published here. If no sizes are published, it falls back to its built-in list. Today wp-admin still has the older **10/12 Yard Dumpster** entry. To show the separate 10 and 12 yard sizes, edit that entry into the 10 Yard (title, Truck Loads "8-10 pickup truck loads", Dimensions "11' L x 8' W x 3.5' H", 10 yard graphic), then add a new **12 Yard Dumpster** entry ("11-14 pickup truck loads", "11' L x 8' W x 4' H", 12 yard graphic).
+> The site shows exactly the sizes published here: 10, 12, 15, 20, and 30 Yard today. To stop offering a size, open it and click **Move to Trash**.
 
 ## Managing Commercial Containers
 
@@ -219,13 +221,13 @@ The permanent dumpster options on the Commercial page (96 Gallon, 2 Yard, 4 Yard
 ![Commercial Container: Description, Dimensions, Capacity, Dimension Graphic, Ideal For](images/acf-commercial-container.jpg)
 
 **How to add or update a container**
-1. In the left menu, click **Commercial Containers**. Click **Add New** for a new one, or click an existing container to edit it.
+1. In the left menu, click **Commercial Containers**. Click **Add Post** for a new one, or click an existing container to edit it.
 2. Type the title, for example "4 Yard".
 3. Fill in **Description**, **Dimensions** (e.g. 87" L x 66" W x 48" H), **Capacity** (e.g. 3-4 pickup truck loads), and **Ideal For** (one item per line).
 4. Under **Dimension Graphic**, click **Add Image**, upload or choose the graphic, then click **Select**.
-5. Set the **Order** number in the right-hand sidebar (1 shows first), then click **Publish** (or **Save** when editing).
+5. Set the **Order** number in the right-hand sidebar (1 shows first), then click **Publish** (or **Update** when editing).
 
-> **Important:** no containers are entered here yet, so the Commercial page shows its built-in list (96 Gallon, 2, 4, 6, and 8 Yard). As soon as you publish one, only published containers show — enter all five before publishing, or publish them together.
+> The Commercial page shows exactly the containers published here: 96 Gallon, 2, 4, 6, and 8 Yard today.
 
 **Note on the Dumpster Calculator tool** (the "recommend a size" quiz on the Dumpster Calculator page): its sizing logic is fixed in the site's code, not editable here in wp-admin. By design, checking **Other Heavy Materials** always caps the recommendation at 10 Yard regardless of project type — heavy materials (concrete, dirt, roofing tear-off) hit a dumpster's weight limit long before it's visually full, so a bigger box wouldn't help. The tool shows an explanatory note whenever that happens. If you ever want the underlying project-type-to-size mapping changed, that's a developer change, not a content edit.
 
@@ -238,10 +240,10 @@ Each FAQ has a Question, an Answer (rich text — you can bold, link, and add li
 ![FAQ: Question and Answer](images/acf-faq.jpg)
 
 **How to add or change an FAQ**
-1. In the left menu, click **FAQs**. Click **Add New**, or click a question to edit it.
-2. Type the **Question** and the **Answer**.
+1. In the left menu, click **FAQs**. Click **Add Post**, or click a question to edit it.
+2. Type the question in the title box at the top (this is what you'll see in the FAQs list), then type it again in the **Question** box and fill in the **Answer**. Leave the large empty text box under the title alone; the site doesn't use it.
 3. Choose the **Category** (Dumpster, Residential, or Commercial) and a **Sort Order** number. Lower numbers show first within the category.
-4. Click **Publish** (or **Save**).
+4. Click **Publish** (or **Update**).
 
 **To remove an FAQ,** hover over it in the FAQs list and click **Trash**.
 
@@ -259,11 +261,12 @@ The FAQs page shows exactly the FAQs published here (21 today).
 **Where to get latitude and longitude:** open Google Maps, right-click the centre of the town, and the first line of the menu shows two numbers like `42.6331, -88.6437`. The first is the Latitude, the second is the Longitude (it's negative here in Wisconsin). Click them to copy, then paste each into its field.
 
 **How to add or change a service area**
-1. In the left menu, click **Service Areas**. Click **Add New**, or click an area to edit it.
+1. In the left menu, click **Service Areas**. Click **Add Post**, or click an area to edit it.
 2. Type the title (the town or county name) and the **County**.
 3. Check every **Service Type** you offer there.
 4. For a town, paste its **Latitude** and **Longitude**. For a county, leave them blank.
-5. Click **Publish** (or **Save**), then check the pin on the Home page map.
+5. Leave **Order** at 0. Towns are numbered alphabetically, so adding one may renumber the others; the pins and the list always change together.
+6. Click **Publish** (or **Update**), then check the pin on the Home page map.
 
 The map shows exactly the areas published here (9 today). Ignore the Schedule boxes on this screen.
 
@@ -285,7 +288,7 @@ Use this for anything time-sensitive: weather delays, holiday closures, service 
 - **Notice Content** — the public title, a short summary, full details (rich text), and Internal Notes (visible only to staff in wp-admin, never shown publicly)
 - **Status and Priority** — turn **Notice Enabled** on, set **Notice Status** (Draft, Scheduled, Active, Resolved, Expired), and **Notice Priority** (Informational, Standard, Important, Urgent, Emergency) — priority affects styling/prominence
 - **Timing** — set Display Start / Display End dates, or turn on **Show Until Manually Resolved** if you don't know the end date yet (you'll turn it off or set Notice Status to Resolved when it's over)
-- **Display Locations** — check **Site-wide announcement bar** to show it in the green bar at the top of every page. Every live notice also appears on the **What's New** page. (The other location checkboxes, Affected Communities, and Popup Settings aren't used by the site yet.)
+- **Display Locations** — check **Site-wide announcement bar** to show it in the pale yellow bar at the top of every page. Every live notice also appears on the **What's New** page (the boxes on this screen call it the "Service Alerts page"; it's the same page). (The other location checkboxes, Affected Communities, and Popup Settings aren't used by the site yet.)
 - **Announcement Bar** — the short text shown in the top bar; if blank, the notice title is used
 
 ![Service Notice: Status and Priority tab](images/acf-service-notice-status.jpg)
@@ -293,7 +296,7 @@ Use this for anything time-sensitive: weather delays, holiday closures, service 
 ![Service Notice: Display Locations tab](images/acf-service-notice-locations.jpg)
 
 **How to post a weather delay or closure**
-1. In the left menu, click **Service Notices → Add New**.
+1. In the left menu, click **Service Notices → Add Post**.
 2. Type a title. On the **Notice Content** tab, add a **Short Summary** (shown on What's New).
 3. On the **Status and Priority** tab, check **Notice Enabled**, set **Notice Status** to **Active**, and pick a **Notice Priority**.
 4. On the **Display Locations** tab, check **Site-wide announcement bar** to show it at the top of every page.
