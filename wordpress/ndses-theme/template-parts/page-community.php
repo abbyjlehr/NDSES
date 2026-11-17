@@ -4,14 +4,13 @@ $community = ndses_get_communities()[$slug] ?? null;
 
 if (!$community) {
     ndses_render_hero('residential');
-    echo '<section class="section"><div class="container"><p>Community details are not available yet.</p></div></section>';
+    echo '<section class="section"><div class="container"><p>We couldn&rsquo;t find that community. See the full list on the Residential page or call NDS.</p></div></section>';
     return;
 }
 ?>
 <section class="hero-section">
     <div class="container hero-grid">
         <div class="hero-copy">
-            <p class="eyebrow"><?php echo esc_html($community['type']); ?> Residential Service</p>
             <h1><?php echo esc_html($community['name']); ?></h1>
             <p class="hero-text"><?php echo esc_html($community['description']); ?></p>
             <div class="hero-actions">
@@ -27,18 +26,10 @@ if (!$community) {
         </div>
     </div>
 </section>
-<?php if ($slug === 'town-of-walworth') : ?>
-<section class="section">
-    <div class="container">
-        <img class="zone-map-image" src="https://ndses.flywheelsites.com/wp-content/uploads/2026/09/walworth-zone-map.jpg" alt="Town of Walworth recycling service map showing North and South collection zones" width="1100" height="870" loading="lazy">
-    </div>
-</section>
-<?php endif; ?>
 <?php if (!empty($community['documents'])) : ?>
 <section class="section soft-section">
     <div class="container">
         <div class="section-heading">
-            <p class="eyebrow">Downloads</p>
             <h2>Printable schedules & guides</h2>
         </div>
         <div class="card-grid three">
@@ -54,11 +45,11 @@ if (!$community) {
 <?php endif; ?>
 <section class="section">
     <div class="container split">
-        <div>
+        <article class="feature-card">
             <h2>Service Guidelines</h2>
             <?php ndses_list($community['guidelines']); ?>
-        </div>
-        <div>
+        </article>
+        <article class="feature-card">
             <h2>Bulk Item Guidance</h2>
             <p><?php echo esc_html($community['bulk_policy']); ?></p>
             <div class="two-column-list">
@@ -71,13 +62,12 @@ if (!$community) {
                     <?php ndses_list($community['bulk_not_accepted'], 'compact-list danger-list'); ?>
                 </div>
             </div>
-        </div>
+        </article>
     </div>
 </section>
 <section class="section soft-section">
     <div class="container">
         <div class="section-heading">
-            <p class="eyebrow">Recycling</p>
             <h2>What belongs in recycling</h2>
         </div>
         <div class="card-grid three">

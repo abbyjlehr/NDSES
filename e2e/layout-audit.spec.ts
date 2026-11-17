@@ -67,6 +67,16 @@ async function measure(page: Page) {
         out.push({ kind: "clipped-text", detail: label(el) });
       }
     }
+
+    // Cards: content must not touch the card's top edge. Only an image frame
+    // that bleeds to the edge (dumpster/container graphics) may sit flush.
+    for (const card of document.querySelectorAll<HTMLElement>("main .feature-card, main .process-step, main .quote-panel, main .site-form, main .map-list, main .autopay-card")) {
+      if (!visible(card)) continue;
+      const first = [...card.children].find((c) => visible(c) && c.getBoundingClientRect().height > 0);
+      if (!first || first.matches("img, .container-image")) continue;
+      const gap = first.getBoundingClientRect().top - card.getBoundingClientRect().top;
+      if (gap < 16) out.push({ kind: "card-padding", detail: `${label(card)}: content ${Math.round(gap)}px from top` });
+    }
     return out.slice(0, 40);
   });
 }

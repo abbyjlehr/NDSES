@@ -4,7 +4,6 @@
   // when IntersectionObserver isn't available — content just stays visible.
   const prefersMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
   if (prefersMotion && 'IntersectionObserver' in window) {
-    const revealTargets = document.querySelectorAll('.section > .container');
     const observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -16,10 +15,53 @@
       },
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
-    revealTargets.forEach(function (target) {
-      target.setAttribute('data-reveal', '');
-      observer.observe(target);
+
+    // Grids: each card comes in a beat after the one before it.
+    document.querySelectorAll('main .card-grid, main .process-grid').forEach(function (grid) {
+      Array.prototype.forEach.call(grid.children, function (child, index) {
+        child.style.setProperty('--i', String(Math.min(index, 8)));
+      });
+      grid.setAttribute('data-reveal-stagger', '');
+      observer.observe(grid);
     });
+
+    // Other blocks fade up; side-by-side blocks follow each other slightly.
+    const blocks = 'main .section-heading, main .split > *, main .payment-grid > *, main .contact-grid > *, '
+      + 'main .calculator-shell > *, main .service-map-wrap > *, main .faq-group, main .content-body, .footer-cta-inner';
+    document.querySelectorAll(blocks).forEach(function (block) {
+      if (block.closest('[data-reveal-stagger]')) return;
+      const siblingIndex = Array.prototype.indexOf.call(block.parentElement.children, block);
+      block.style.setProperty('--reveal-delay', Math.min(siblingIndex, 3) * 100 + 'ms');
+      block.setAttribute('data-reveal', '');
+      observer.observe(block);
+    });
+  }
+
+  // Header gains a soft shadow once the page is scrolled.
+  const siteHeader = document.querySelector('.site-header');
+  if (siteHeader) {
+    const syncHeader = function () {
+      siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+    };
+    syncHeader();
+    window.addEventListener('scroll', syncHeader, { passive: true });
+  }
+
+  // Alert banner: once dismissed, stays hidden for the rest of the visit
+  // (a new or changed alert has a different key, so it shows again).
+  const announcement = document.querySelector('[data-announcement]');
+  if (announcement) {
+    const key = 'ndses-alert-dismissed';
+    try {
+      if (sessionStorage.getItem(key) === announcement.dataset.announcement) announcement.hidden = true;
+    } catch (error) { /* storage blocked: just show it */ }
+    const close = announcement.querySelector('[data-announcement-close]');
+    if (close) {
+      close.addEventListener('click', function () {
+        announcement.hidden = true;
+        try { sessionStorage.setItem(key, announcement.dataset.announcement); } catch (error) { /* ignore */ }
+      });
+    }
   }
 
   initNavigation();
@@ -199,7 +241,7 @@
       const el = result.querySelector(selector);
       return el ? el.innerHTML : fallback;
     };
-    const resultEyebrow = resultText('.eyebrow', 'Recommendation');
+    const resultEyebrow = resultText('.result-label', 'Recommendation');
     const resultNote = resultText('.small-note', '');
     const resultButton = resultText('.button', 'Request Quote');
 
@@ -222,7 +264,7 @@
         materialsNote = ' Heavy materials (concrete, dirt, roofing tear-off, etc.) hit a dumpster’s weight limit well before it fills up, so we cap the recommended size for heavy loads regardless of project type.';
       }
 
-      result.innerHTML = '<p class="eyebrow">' + resultEyebrow + '</p><h2>' + recommendation + '</h2><p>This size is a good starting point for your selected project.' + materialsNote + ' NDS can confirm final sizing, material restrictions, and availability when you request a quote.</p>' + (resultNote ? '<p class="small-note">' + resultNote + '</p>' : '') + '<a class="button button-primary" href="' + window.location.origin + '/dumpster-rentals/?service=dumpster&size=' + encodeURIComponent(recommendation.split(' ')[0] + '-yard') + '#quote">' + resultButton + '</a>';
+      result.innerHTML = '<p class="result-label">' + resultEyebrow + '</p><h2>' + recommendation + '</h2><p>This size is a good starting point for your selected project.' + materialsNote + ' NDS can confirm final sizing, material restrictions, and availability when you request a quote.</p>' + (resultNote ? '<p class="small-note">' + resultNote + '</p>' : '') + '<a class="button button-primary" href="' + window.location.origin + '/dumpster-rentals/?service=dumpster&size=' + encodeURIComponent(recommendation.split(' ')[0] + '-yard') + '#quote">' + resultButton + '</a>';
     });
 
     ndsesInitAddressLookup(form.querySelector('input[name="address"]'));
@@ -273,11 +315,19 @@
       list.hidden = false;
     }
 
+    // The county list comes from the published Service Areas (see
+    // ndses_service_counties()); the home county is Walworth (see
+    // ndses_home_county()). Walworth gets a definite yes, the other listed
+    // counties a "likely, call to confirm", and anything else the outside
+    // message.
     function showStatus(county) {
-      const inArea = county && ndsesData.serviceCounties.indexOf(county) !== -1;
-      status.classList.toggle('in-area', Boolean(inArea));
-      if (inArea) {
+      const listed = county && (ndsesData.serviceCounties || []).indexOf(county) !== -1;
+      const home = listed && county === ndsesData.homeCounty;
+      status.classList.toggle('in-area', Boolean(listed));
+      if (home) {
         status.textContent = '✓ ' + county + ' County is in the NDS service area.';
+      } else if (listed) {
+        status.textContent = '✓ ' + county + ' County is likely in the NDS service area — call ' + ndsesData.phone + ' to confirm service at your address.';
       } else if (county) {
         status.textContent = county + ' County is outside the core NDS service area — call ' + ndsesData.phone + ' to confirm.';
       } else {
@@ -341,7 +391,12 @@
 
     function initSecureFields() {
       if (!window.PayEngine || (cardForm && achForm)) return;
-      const css = { fontFamily: 'inherit', fontSize: '16px', width: '100%', height: '46px', padding: '10px 12px', color: '#14211a' };
+      // Sized to match the theme's regular inputs: the .secure-field box is
+      // 48px tall with a 1px border, so the iframe content is 46px tall and
+      // text starts 14px in, the same as other inputs' padding.
+      // The iframes can't load the theme's Public Sans, so they use the
+      // closest system sans-serif ('inherit' fell back to a serif font).
+      const css = { fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', fontSize: '16px', width: '100%', height: '46px', lineHeight: '46px', padding: '0 14px', boxSizing: 'border-box', color: '#15211a', '&::placeholder': { color: '#56655b' } };
 
       Promise.all([
         window.PayEngine.SecureFields.create(),
@@ -364,6 +419,24 @@
         if (submitButton) submitButton.disabled = false;
       });
     }
+
+    // PayEngine's iframes arrive untitled; screen readers announce an
+    // iframe by its title, so name each one after its field label.
+    function titleSecureFrames() {
+      payEngineForm.querySelectorAll('.secure-field iframe:not([title])').forEach(function (frame) {
+        const label = frame.closest('label');
+        const text = label && label.firstChild ? label.firstChild.textContent.trim() : '';
+        frame.setAttribute('title', text ? text + ' (secure field)' : 'Secure payment field');
+      });
+      // The SDK also adds a 0x0 connection iframe to <body>; hide it from
+      // assistive tech rather than announcing an empty frame.
+      document.querySelectorAll('body > iframe:not([title])').forEach(function (frame) {
+        frame.setAttribute('title', 'Secure payment connection');
+        frame.setAttribute('aria-hidden', 'true');
+        frame.setAttribute('tabindex', '-1');
+      });
+    }
+    new MutationObserver(titleSecureFrames).observe(document.body, { childList: true, subtree: true });
 
     if (submitButton) submitButton.disabled = true;
     if (window.PayEngine) {

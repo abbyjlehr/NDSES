@@ -62,17 +62,6 @@
       "instructions": "TODO: Form Backend - Add final destination before production submissions are enabled."
     },
     {
-      "key": "field_ndses_google_maps_status",
-      "label": "Google Maps Status",
-      "name": "google_maps_status",
-      "type": "select",
-      "choices": {
-        "placeholder": "Static placeholder",
-        "api": "Google Maps API connected"
-      },
-      "instructions": "TODO: ACF - Service coordinates/polygons can be populated later."
-    },
-    {
       "key": "field_ndses_facebook_sync_status",
       "label": "Facebook Alert Sync Status",
       "name": "facebook_sync_status",
@@ -113,5 +102,5 @@
   ],
   "show_in_rest": 1,
   "active": true,
-  "modified": 1792159580
+  "modified": 1793980800
 }

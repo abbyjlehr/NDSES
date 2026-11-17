@@ -2,7 +2,6 @@
 <section class="section">
     <div class="container">
         <div class="section-heading">
-            <p class="eyebrow"><?php echo esc_html(ndses_sec('communities', 'eyebrow', 'residential')); ?></p>
             <h2><?php echo esc_html(ndses_sec('communities', 'heading', 'residential')); ?></h2>
         </div>
         <div class="card-grid five">
@@ -11,7 +10,7 @@
                     <p class="kicker"><?php echo esc_html($community['type']); ?></p>
                     <h3><?php echo esc_html($community['name']); ?></h3>
                     <p><strong><?php echo esc_html($community['service_day']); ?></strong> collection</p>
-                    <a class="text-link" href="<?php echo esc_url(home_url('/residential/' . $slug)); ?>"><?php echo esc_html(ndses_sec('communities', 'link_label', 'residential')); ?></a>
+                    <a class="text-link" href="<?php echo esc_url(home_url('/residential/' . $slug . '/')); ?>"><?php echo esc_html(ndses_sec('communities', 'link_label', 'residential')); ?></a>
                 </article>
             <?php endforeach; ?>
         </div>
@@ -20,7 +19,6 @@
 <section class="section soft-section">
     <div class="container split">
         <div>
-            <p class="eyebrow"><?php echo esc_html(ndses_sec('pickup', 'eyebrow', 'residential')); ?></p>
             <h2><?php echo esc_html(ndses_sec('pickup', 'heading', 'residential')); ?></h2>
             <?php ndses_list(ndses_sec_lines('pickup', 'list', 'residential')); ?>
         </div>
