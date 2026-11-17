@@ -1,4 +1,14 @@
 (function () {
+  /**
+   * Analytics: push an event to the Google Tag Manager data layer. GTM
+   * (loaded only on ndses.com, see inc/analytics.php) turns these into GA4
+   * events. Never put names, emails, phone numbers or account numbers here.
+   */
+  function track(eventName, params) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: eventName }, params || {}));
+  }
+
   // Scroll-reveal: fade/slide in each section's content once it enters the
   // viewport. Skipped entirely when the visitor prefers reduced motion, or
   // when IntersectionObserver isn't available — content just stays visible.
@@ -499,6 +509,13 @@
         .then(function (result) {
           const mode = result.body && result.body.mode;
           if (result.ok && mode === 'success') {
+            const paidAmount = parseFloat(String(values.amount || '').replace(/[^0-9.]/g, ''));
+            track('ndses_payment_complete', {
+              value: isFinite(paidAmount) ? paidAmount : 0,
+              currency: 'USD',
+              payment_method: paymentMethod,
+              transaction_id: result.body.transactionId ? String(result.body.transactionId) : undefined
+            });
             // form.reset() puts the method back to Card without firing
             // 'change', and doesn't reach the SecureFields iframes, so
             // re-sync the visible fields and clear the card/bank details.
@@ -596,6 +613,10 @@
         })
         .then(function (result) {
           if (result.ok) {
+            track('ndses_form_submit', {
+              form_type: data.formType || 'contact',
+              service_type: data.serviceType || undefined
+            });
             form.reset();
             if (status) {
               status.textContent = 'Thanks — your request has been sent. NDS will be in touch soon.';

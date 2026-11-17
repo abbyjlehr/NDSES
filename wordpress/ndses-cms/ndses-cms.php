@@ -2,7 +2,7 @@
 /**
  * Plugin Name: NDSES CMS Structure
  * Description: Registers NDSES custom post types, ACF options pages, and local field groups.
- * Version: 0.2.5
+ * Version: 0.2.6
  */
 
 if (!defined('ABSPATH')) {
@@ -172,7 +172,7 @@ function ndses_settings_pages(): array
         'ndses-site-settings' => [
             'page_title' => 'NDSES Site Settings',
             'menu_title' => 'Site Settings',
-            'field_groups' => ['group_ndses_site_settings', 'group_ndses_recaptcha', 'group_ndses_integration_placeholders'],
+            'field_groups' => ['group_ndses_site_settings', 'group_ndses_recaptcha', 'group_ndses_analytics', 'group_ndses_integration_placeholders'],
         ],
         'ndses-site-settings-integrations' => [
             'page_title' => 'Integration Settings',
