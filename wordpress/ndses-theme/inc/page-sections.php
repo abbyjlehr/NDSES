@@ -147,7 +147,7 @@ function ndses_page_sections(): array
                 ]],
                 'quote' => ['label' => 'Quote Form', 'fields' => [
                     'heading' => ['text', 'Heading', 'Request a dumpster'],
-                    'body' => ['textarea', 'Text', 'Arriving from "Request This Size"? The size you picked carries over automatically.'],
+                    'body' => ['textarea', 'Text', 'Tell us about your project and NDS will confirm the size, delivery date, and pricing.'],
                 ]],
             ],
         ],
@@ -209,12 +209,12 @@ function ndses_page_sections(): array
             'title' => 'Make a Payment',
             'sections' => [
                 'form' => ['label' => 'Payment Form', 'fields' => [
-                    'heading' => ['text', 'Form heading', 'Payment Form', 'The payment fields themselves are fixed so PayEngine keeps working.'],
+                    'heading' => ['text', 'Form heading', 'Payment details', 'The payment fields themselves are fixed so PayEngine keeps working.'],
                 ]],
                 'sidebar' => ['label' => 'Side Box', 'fields' => [
-                    'heading' => ['text', 'Heading', 'ACH Bank Payment'],
-                    'body' => ['textarea', 'Text', "Pay directly from a checking or savings account using PayEngine's secure bank-transfer flow."],
-                    'note' => ['textarea', 'Small print', 'Card payments may include a 3% fee where applicable.'],
+                    'heading' => ['text', 'Heading', 'Ways to pay'],
+                    'body' => ['textarea', 'Text', "Pay by card, or directly from a checking or savings account (ACH bank transfer)."],
+                    'note' => ['textarea', 'Small print', 'Card payments may include a 3% fee.'],
                 ]],
             ],
         ],
@@ -222,7 +222,7 @@ function ndses_page_sections(): array
             'title' => 'Contact',
             'sections' => [
                 'card' => ['label' => 'Contact Box', 'fields' => [
-                    'heading' => ['text', 'Heading', 'Contact Card', 'Address, phone, email, and hours come from Site Settings.'],
+                    'heading' => ['text', 'Heading', 'Contact NDS', 'Address, phone, email, and hours come from Site Settings.'],
                     'hours_heading' => ['text', 'Hours heading', 'Office Hours'],
                 ]],
             ],

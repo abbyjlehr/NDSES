@@ -53,8 +53,13 @@ $ndses_hours = implode(' · ', ndses_hours_lines());
                         if (empty($item['children'])) : ?>
                             <li><a class="nav-trigger<?php echo $active ? ' is-active' : ''; ?>" href="<?php echo esc_url($item['url']); ?>"><?php echo esc_html($item['label']); ?></a></li>
                         <?php else : ?>
+                            <?php
+                            // Sections whose first link is an "... Overview" page open that page when the label is clicked.
+                            $overview = (string) ($item['children'][0]['url'] ?? '');
+                            $overview = (stripos((string) ($item['children'][0]['label'] ?? ''), 'overview') !== false) ? $overview : '';
+                            ?>
                             <li class="nav-item" data-nav-item>
-                                <button class="nav-trigger<?php echo $active ? ' is-active' : ''; ?>" type="button" aria-expanded="false" aria-controls="nav-menu-<?php echo (int) $index; ?>" data-nav-trigger>
+                                <button class="nav-trigger<?php echo $active ? ' is-active' : ''; ?>" type="button" aria-expanded="false" aria-controls="nav-menu-<?php echo (int) $index; ?>" data-nav-trigger<?php if ($overview !== '') : ?> data-href="<?php echo esc_url($overview); ?>"<?php endif; ?>>
                                     <?php echo esc_html($item['label']); ?>
                                     <svg class="nav-caret" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                                 </button>

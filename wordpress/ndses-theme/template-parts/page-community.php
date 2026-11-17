@@ -14,7 +14,7 @@ if (!$community) {
             <h1><?php echo esc_html($community['name']); ?></h1>
             <p class="hero-text"><?php echo esc_html($community['description']); ?></p>
             <div class="hero-actions">
-                <?php ndses_button('Request Service', home_url('/contact?service=residential')); ?>
+                <?php ndses_button('Request Service', home_url('/contact/?service=residential')); ?>
                 <?php ndses_button('Call NDS', ndses_phone_href(), 'button button-secondary'); ?>
             </div>
         </div>

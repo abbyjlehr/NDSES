@@ -500,10 +500,10 @@ li + li {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgb(255 255 255 / 86%);
+  /* Solid, not a frosted blur: blurring the page behind a sticky header
+     (and the dropdowns inside it) made scrolling and the menus lag. */
+  background: #fff;
   box-shadow: 0 1px 0 rgb(16 32 24 / 7%);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
-  backdrop-filter: saturate(180%) blur(16px);
 }
 
 .admin-bar .site-header {
@@ -649,8 +649,7 @@ li + li {
   color: var(--forest-900);
 }
 
-/* Current section: a small dot under the label, so it never looks like a
-   lingering hover (the tinted pill only shows on hover or while open). */
+/* Current section: a plain underline under the label. */
 .nav-trigger.is-active {
   position: relative;
   color: var(--forest-900);
@@ -659,13 +658,12 @@ li + li {
 .nav-trigger.is-active::after {
   content: "";
   position: absolute;
-  bottom: 2px;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+  right: 14px;
+  bottom: 3px;
+  left: 14px;
+  height: 2px;
+  border-radius: 1px;
   background: var(--green-600);
-  transform: translateX(-50%);
 }
 
 .nav-caret {
@@ -685,7 +683,19 @@ li + li {
   z-index: 45;
   width: 340px;
   padding-top: var(--space-3);
-  filter: drop-shadow(0 24px 32px rgb(16 40 28 / 16%)) drop-shadow(0 2px 6px rgb(16 32 24 / 6%));
+}
+
+/* The card's shadow is a plain box-shadow on a backing layer (it starts
+   below the invisible hover bridge). A CSS filter here was repainted on
+   every link hover and made the menu feel sluggish. */
+.nav-panel::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-3) 0 0;
+  z-index: -1;
+  border-radius: var(--radius);
+  box-shadow: 0 24px 40px -8px rgb(16 40 28 / 18%), 0 2px 6px rgb(16 32 24 / 6%);
+  pointer-events: none;
 }
 
 .desktop-nav-list > li:nth-last-child(-n + 2) .nav-panel {
@@ -2318,7 +2328,7 @@ legend {
 }
 
 .site-header.is-scrolled {
-  background: rgb(255 255 255 / 94%);
+  background: #fff;
   box-shadow: 0 1px 0 rgb(16 32 24 / 7%), 0 12px 32px -16px rgb(16 40 28 / 22%);
 }
 

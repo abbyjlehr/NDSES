@@ -216,7 +216,7 @@ function ndses_data(): array
             ['name' => 'Kenosha County', 'county' => 'Kenosha County', 'types' => ['Commercial', 'Roll-off'], 'lat' => null, 'lon' => null],
         ],
         'notices' => [
-            ['title' => 'Service alerts and updates', 'type' => 'Announcement', 'date' => '2026-08-10', 'body' => 'No urgent service alerts are active. Weather delays, holiday schedule changes, closures, and route updates will be posted here.'],
+            ['title' => 'Service alerts and updates', 'type' => 'Announcement', 'date' => '', 'body' => 'No urgent service alerts are active. Weather delays, holiday schedule changes, closures, and route updates will be posted here.'],
         ],
     ];
 

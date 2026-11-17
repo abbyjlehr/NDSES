@@ -345,7 +345,7 @@ function ndses_render_service_area_map(array $filter_types = []): void
                 <?php endforeach; ?>
             </div>
             <?php if ($towns) : ?>
-                <figcaption><span class="map-key" aria-hidden="true"></span>Residential service area &middot; numbers match the list</figcaption>
+                <figcaption><span class="map-key" aria-hidden="true"></span>Residential service area</figcaption>
             <?php endif; ?>
         </figure>
         <div class="map-list">

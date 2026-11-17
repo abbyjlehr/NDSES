@@ -87,11 +87,16 @@
    */
   function initNavigation() {
     const CLOSE_DELAY_MS = 140;
+    // Brief hover intent so menus don't pop open when the pointer merely
+    // passes over the nav on its way to something else. Once a menu is
+    // open, moving to a neighbor switches instantly.
+    const OPEN_DELAY_MS = 90;
     const nav = document.querySelector('[data-desktop-nav]');
     const items = nav ? [...nav.querySelectorAll('[data-nav-item]')] : [];
     const triggers = items.map((item) => item.querySelector('[data-nav-trigger]'));
     let openItem = null;
     let closeTimer;
+    let openTimer;
     let lastPointer = '';
 
     const panelOf = (item) => item.querySelector('[data-nav-panel]');
@@ -100,6 +105,7 @@
 
     function setOpen(item) {
       window.clearTimeout(closeTimer);
+      window.clearTimeout(openTimer);
       items.forEach((other) => {
         const open = other === item;
         panelOf(other).hidden = !open;
@@ -116,10 +122,15 @@
       const trigger = triggerOf(item);
 
       item.addEventListener('pointerenter', (event) => {
-        if (event.pointerType === 'mouse') setOpen(item);
+        if (event.pointerType !== 'mouse') return;
+        window.clearTimeout(closeTimer);
+        window.clearTimeout(openTimer);
+        if (openItem) setOpen(item);
+        else openTimer = window.setTimeout(() => setOpen(item), OPEN_DELAY_MS);
       });
       item.addEventListener('pointerleave', (event) => {
         if (event.pointerType !== 'mouse') return;
+        window.clearTimeout(openTimer);
         window.clearTimeout(closeTimer);
         closeTimer = window.setTimeout(closeAll, CLOSE_DELAY_MS);
       });
@@ -128,7 +139,14 @@
         lastPointer = event.pointerType;
       });
       trigger.addEventListener('click', () => {
-        // A mouse already opened the menu on hover, so its click keeps it open.
+        // Like a normal site nav, clicking a section name with a mouse goes
+        // to that section's overview page (when it has one). Touch and
+        // keyboard toggle the menu instead, since they can't hover.
+        const href = trigger.dataset.href;
+        if (lastPointer === 'mouse' && href) {
+          window.location.href = href;
+          return;
+        }
         if (lastPointer === 'mouse') setOpen(item);
         else setOpen(openItem === item ? null : item);
       });
