@@ -1,0 +1,32 @@
+{
+  "key": "group_ndses_analytics",
+  "title": "Analytics (Google Tag Manager)",
+  "fields": [
+    {
+      "key": "field_ndses_gtm_id",
+      "label": "Google Tag Manager ID",
+      "name": "gtm_id",
+      "type": "text",
+      "instructions": "The container ID from tagmanager.google.com, for example GTM-KFW62PL4. It only loads on ndses.com (not on the Flywheel test address), so test visits don't show up in Google Analytics. Leave blank to turn tracking off.",
+      "placeholder": "GTM-XXXXXXX",
+      "maxlength": 20
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "ndses-site-settings"
+      }
+    ]
+  ],
+  "menu_order": 2,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "show_in_rest": 0,
+  "active": true,
+  "modified": 1794900000
+}
