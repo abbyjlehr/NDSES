@@ -254,7 +254,7 @@ The FAQs page shows exactly the FAQs published here (21 today).
 **Service Areas** power the coverage map shown on the Home, About, and Commercial pages, and the address check on the Dumpster Calculator. Each entry is a town or county with:
 - County name (for example "Walworth County")
 - Service Types (check any combination of **Residential**, **Commercial**, **Temporary roll-off / dumpster rentals**)
-- Latitude and Longitude — the town's position, in decimal degrees. Towns with these filled in get a numbered pin on the Walworth County map. Leave both blank for a county entry, or for a town outside Walworth County — it still appears in the list, just without a pin.
+- Latitude and Longitude — the town's position, in decimal degrees. Towns with these filled in get a numbered pin on the service-area map. Leave both blank for a county entry; it still appears in the list, just without a pin.
 
 **Where to get latitude and longitude:** open Google Maps, right-click the centre of the town, and the first line of the menu shows two numbers like `42.6331, -88.6437`. The first is the Latitude, the second is the Longitude (it's negative here in Wisconsin). Click them to copy, then paste each into its field.
 
@@ -262,7 +262,7 @@ The FAQs page shows exactly the FAQs published here (21 today).
 1. In the left menu, click **Service Areas**. Click **Add New**, or click an area to edit it.
 2. Type the title (the town or county name) and the **County**.
 3. Check every **Service Type** you offer there.
-4. For a town on the Walworth County map, paste its **Latitude** and **Longitude**. For a county, leave them blank.
+4. For a town, paste its **Latitude** and **Longitude**. For a county, leave them blank.
 5. Click **Publish** (or **Save**), then check the pin on the Home page map.
 
 The map shows exactly the areas published here (9 today). Ignore the Schedule boxes on this screen.
