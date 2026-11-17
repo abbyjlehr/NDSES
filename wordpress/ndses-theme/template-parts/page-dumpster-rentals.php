@@ -5,7 +5,7 @@
             <div>
                 <h2><?php echo esc_html(ndses_sec('sizes', 'heading', 'dumpster-rentals')); ?></h2>
             </div>
-            <?php ndses_button(ndses_sec('sizes', 'button', 'dumpster-rentals'), home_url('/dumpster-calculator'), 'button button-secondary'); ?>
+            <?php ndses_button(ndses_sec('sizes', 'button', 'dumpster-rentals'), home_url('/dumpster-calculator/'), 'button button-secondary'); ?>
         </div>
         <?php ndses_render_dumpster_cards(); ?>
     </div>

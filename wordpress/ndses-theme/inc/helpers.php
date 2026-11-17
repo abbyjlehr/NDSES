@@ -117,6 +117,29 @@ function ndses_list(array $items, string $class = 'check-list'): void
 }
 
 /**
+ * Adds the trailing slash WordPress redirects to on this site's own page
+ * links ('/contact' -> '/contact/', '/commercial#recycling' ->
+ * '/commercial/#recycling'), saving visitors a redirect. Links to other
+ * sites, phone and email links, files (anything with an extension) and
+ * the home page are left as they are.
+ */
+function ndses_slash_url(string $url): string
+{
+    $home = wp_parse_url(home_url(), PHP_URL_HOST);
+    $parts = wp_parse_url($url);
+    if (!is_array($parts) || !in_array($parts['scheme'] ?? 'https', ['http', 'https'], true) || (isset($parts['host']) && $parts['host'] !== $home)) {
+        return $url;
+    }
+    $path = $parts['path'] ?? '';
+    if ($path === '' || str_ends_with($path, '/') || str_contains(basename($path), '.')) {
+        return $url;
+    }
+    $at = strpos($url, $path, isset($parts['host']) ? strpos($url, $parts['host']) + strlen($parts['host']) : 0);
+
+    return $at === false ? $url : substr_replace($url, $path . '/', $at, strlen($path));
+}
+
+/**
  * Navigation tree: [['label', 'url', 'description', 'children' => [...]], ...].
  * Uses the menu assigned to "Primary Navigation" (Appearance > Menus) when
  * there is one -- top-level items become dropdown triggers and their
@@ -130,13 +153,13 @@ function ndses_nav_items(): array
         $tree = [];
         foreach ($items as $item) {
             if ((int) $item->menu_item_parent === 0) {
-                $tree[$item->ID] = ['label' => $item->title, 'url' => $item->url, 'description' => $item->description, 'children' => []];
+                $tree[$item->ID] = ['label' => $item->title, 'url' => ndses_slash_url($item->url), 'description' => $item->description, 'children' => []];
             }
         }
         foreach ($items as $item) {
             $parent = (int) $item->menu_item_parent;
             if ($parent && isset($tree[$parent])) {
-                $tree[$parent]['children'][] = ['label' => $item->title, 'url' => $item->url, 'description' => $item->description];
+                $tree[$parent]['children'][] = ['label' => $item->title, 'url' => ndses_slash_url($item->url), 'description' => $item->description];
             }
         }
         if ($tree) {

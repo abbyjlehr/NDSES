@@ -51,31 +51,31 @@ function ndses_data(): array
         // Mirrors the Next.js navigation (lib/cms/mock-data.ts). Used when no
         // Primary Navigation menu is assigned in Appearance > Menus.
         'nav' => [
-            ['label' => 'Residential', 'url' => '/residential', 'description' => 'Residential trash, recycling, schedules, and community pages.', 'children' => [
-                ['label' => 'Residential Overview', 'url' => '/residential', 'description' => 'Trash, recycling, bulk-item guidance, and FAQs.'],
-                ['label' => 'Town of Walworth', 'url' => '/residential/town-of-walworth', 'description' => 'Thursday collection and local notices.'],
-                ['label' => 'Town of Delavan', 'url' => '/residential/town-of-delavan', 'description' => 'Monday collection and local notices.'],
-                ['label' => 'City of Delavan', 'url' => '/residential/city-of-delavan', 'description' => 'Wednesday collection and local notices.'],
-                ['label' => 'Town of Darien', 'url' => '/residential/town-of-darien', 'description' => 'Tuesday collection.'],
-                ['label' => 'Town of Sharon', 'url' => '/residential/town-of-sharon', 'description' => 'Tuesday collection.'],
+            ['label' => 'Residential', 'url' => '/residential/', 'description' => 'Residential trash, recycling, schedules, and community pages.', 'children' => [
+                ['label' => 'Residential Overview', 'url' => '/residential/', 'description' => 'Trash, recycling, bulk-item guidance, and FAQs.'],
+                ['label' => 'Town of Walworth', 'url' => '/residential/town-of-walworth/', 'description' => 'Thursday collection and local notices.'],
+                ['label' => 'Town of Delavan', 'url' => '/residential/town-of-delavan/', 'description' => 'Monday collection and local notices.'],
+                ['label' => 'City of Delavan', 'url' => '/residential/city-of-delavan/', 'description' => 'Wednesday collection and local notices.'],
+                ['label' => 'Town of Darien', 'url' => '/residential/town-of-darien/', 'description' => 'Tuesday collection.'],
+                ['label' => 'Town of Sharon', 'url' => '/residential/town-of-sharon/', 'description' => 'Tuesday collection.'],
             ]],
-            ['label' => 'Commercial', 'url' => '/commercial', 'description' => 'Commercial trash, recycling, containers, and quote requests.', 'children' => [
-                ['label' => 'Commercial Overview', 'url' => '/commercial', 'description' => 'Permanent containers and business service plans.'],
-                ['label' => 'Container Options', 'url' => '/commercial#containers', 'description' => '96-gallon, 2-yard, 4-yard, 6-yard, and 8-yard options.'],
-                ['label' => 'Commercial Recycling', 'url' => '/commercial#recycling', 'description' => 'Cardboard, paper, plastic, aluminum, and mixed recycling.'],
+            ['label' => 'Commercial', 'url' => '/commercial/', 'description' => 'Commercial trash, recycling, containers, and quote requests.', 'children' => [
+                ['label' => 'Commercial Overview', 'url' => '/commercial/', 'description' => 'Permanent containers and business service plans.'],
+                ['label' => 'Container Options', 'url' => '/commercial/#containers', 'description' => '96-gallon, 2-yard, 4-yard, 6-yard, and 8-yard options.'],
+                ['label' => 'Commercial Recycling', 'url' => '/commercial/#recycling', 'description' => 'Cardboard, paper, plastic, aluminum, and mixed recycling.'],
             ]],
-            ['label' => 'Dumpster Rentals', 'url' => '/dumpster-rentals', 'description' => 'Temporary roll-off dumpsters and size guidance.', 'children' => [
-                ['label' => 'Rental Overview', 'url' => '/dumpster-rentals', 'description' => 'Temporary dumpsters for projects and cleanouts.'],
-                ['label' => 'Dumpster Calculator', 'url' => '/dumpster-calculator', 'description' => 'Choose the right roll-off size.'],
-                ['label' => 'Accepted Materials', 'url' => '/dumpster-rentals#materials', 'description' => 'What can and cannot go in a rental dumpster.'],
-                ['label' => 'Special Events', 'url' => '/special-events', 'description' => 'Containers and cleanup for community and private events.'],
+            ['label' => 'Dumpster Rentals', 'url' => '/dumpster-rentals/', 'description' => 'Temporary roll-off dumpsters and size guidance.', 'children' => [
+                ['label' => 'Rental Overview', 'url' => '/dumpster-rentals/', 'description' => 'Temporary dumpsters for projects and cleanouts.'],
+                ['label' => 'Dumpster Calculator', 'url' => '/dumpster-calculator/', 'description' => 'Choose the right roll-off size.'],
+                ['label' => 'Accepted Materials', 'url' => '/dumpster-rentals/#materials', 'description' => 'What can and cannot go in a rental dumpster.'],
+                ['label' => 'Special Events', 'url' => '/special-events/', 'description' => 'Containers and cleanup for community and private events.'],
             ]],
-            ['label' => 'Resources', 'url' => '/whats-new', 'description' => 'Updates, FAQs, contact, payment, and company information.', 'children' => [
-                ['label' => "What's New", 'url' => '/whats-new', 'description' => 'Alerts and service updates.'],
-                ['label' => 'FAQs', 'url' => '/faqs', 'description' => 'Dumpster, residential, and commercial questions.'],
-                ['label' => 'About Us', 'url' => '/about', 'description' => 'Our story and mission.'],
-                ['label' => 'Contact Us', 'url' => '/contact', 'description' => 'Quotes, estimates, and questions.'],
-                ['label' => 'Make a Payment', 'url' => '/make-a-payment', 'description' => 'Pay your account balance online by card or ACH.'],
+            ['label' => 'Resources', 'url' => '/whats-new/', 'description' => 'Updates, FAQs, contact, payment, and company information.', 'children' => [
+                ['label' => "What's New", 'url' => '/whats-new/', 'description' => 'Alerts and service updates.'],
+                ['label' => 'FAQs', 'url' => '/faqs/', 'description' => 'Dumpster, residential, and commercial questions.'],
+                ['label' => 'About Us', 'url' => '/about/', 'description' => 'Our story and mission.'],
+                ['label' => 'Contact Us', 'url' => '/contact/', 'description' => 'Quotes, estimates, and questions.'],
+                ['label' => 'Make a Payment', 'url' => '/make-a-payment/', 'description' => 'Pay your account balance online by card or ACH.'],
             ]],
         ],
         'pages' => [
@@ -152,9 +152,9 @@ function ndses_data(): array
         // brand-styled icon cards (see ndses_render_service_cards()) so
         // the homepage doesn't advertise another waste company.
         'services' => [
-            ['title' => 'Residential Trash & Recycling', 'body' => 'Curbside and drive-up garbage and recycling services depending on your community.', 'url' => '/residential', 'icon' => 'residential'],
-            ['title' => 'Commercial Trash & Recycling', 'body' => 'Permanent trash and recycling dumpsters with collection schedules matched to your business.', 'url' => '/commercial', 'icon' => 'commercial'],
-            ['title' => 'Dumpster Rentals', 'body' => 'Temporary roll-off dumpsters for renovations, construction debris, cleanouts, and events.', 'url' => '/dumpster-rentals', 'icon' => 'rolloff'],
+            ['title' => 'Residential Trash & Recycling', 'body' => 'Curbside and drive-up garbage and recycling services depending on your community.', 'url' => '/residential/', 'icon' => 'residential'],
+            ['title' => 'Commercial Trash & Recycling', 'body' => 'Permanent trash and recycling dumpsters with collection schedules matched to your business.', 'url' => '/commercial/', 'icon' => 'commercial'],
+            ['title' => 'Dumpster Rentals', 'body' => 'Temporary roll-off dumpsters for renovations, construction debris, cleanouts, and events.', 'url' => '/dumpster-rentals/', 'icon' => 'rolloff'],
         ],
         'communities' => [
             'town-of-walworth' => array_merge(ndses_community_seed('Town of Walworth', 'Town', 'Thursday', 'Weekly', 'Every Other Week (see the service calendar below)', 'We will collect up to the equivalent of four 32-gallon cans each week for both trash and recycle.', $mission, $accepted_recycling, $recycling_not_accepted, $recycling_never, $bulk_accepted, $bulk_not), [
@@ -195,7 +195,7 @@ function ndses_data(): array
         ],
         'commercial_containers' => [
             ['name' => '96 Gallon', 'body' => 'Compact container for lower-volume recurring trash or recycling service.', 'ideal' => ['Small offices', 'Low-volume retail', 'Churches']],
-            ['name' => '2 Yard', 'body' => 'Small rear-load dumpster for businesses with steady weekly disposal needs.', 'dimensions' => '66" L x 38" W x 48" H', 'capacity' => '1-2 pickup truck loads', 'image' => 'dumpster-2-yard.png', 'ideal' => ['Small offices & businesses', '1-4 unit properties']],
+            ['name' => '2 Yard', 'body' => 'Small rear-load dumpster for businesses with steady weekly disposal needs.', 'dimensions' => '66" L x 38" W x 48" H', 'capacity' => '1-2 pickup truck loads', 'image' => 'dumpster-2-yard.webp', 'ideal' => ['Small offices & businesses', '1-4 unit properties']],
             ['name' => '4 Yard', 'body' => 'Mid-size commercial container for growing waste streams.', 'dimensions' => '87" L x 66" W x 48" H', 'capacity' => '3-4 pickup truck loads', 'image' => 'dumpster-4-yard.png', 'ideal' => ['Restaurants', 'Small apartment complexes', 'Medium retail stores']],
             ['name' => '6 Yard', 'body' => 'Larger container for busy sites that need more capacity.', 'dimensions' => '111" L x 66" W x 53" H', 'capacity' => '5-6 pickup truck loads', 'image' => 'dumpster-6-yard.png', 'ideal' => ['Large restaurants', 'Large apartment complexes', 'Schools', 'Small remodeling projects', 'Areas with space constraints']],
             ['name' => '8 Yard', 'body' => 'High-capacity permanent dumpster for demanding commercial accounts.', 'dimensions' => '116" L x 66" W x 73" H', 'capacity' => '7-8 pickup truck loads', 'image' => 'dumpster-8-yard.png', 'ideal' => ['Manufacturing', 'Schools', 'Large retail']],

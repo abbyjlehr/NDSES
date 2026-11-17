@@ -38,10 +38,10 @@ function ndses_render_hero(?string $slug = null): void
                 <h1><?php echo esc_html($hero['heading'] ?? get_the_title()); ?></h1>
                 <p class="hero-text"><?php echo esc_html($hero['description'] ?? ''); ?></p>
                 <div class="hero-actions">
-                    <?php ndses_button('Get a Quote', home_url('/contact')); ?>
+                    <?php ndses_button('Get a Quote', home_url('/contact/')); ?>
                     <?php ndses_button('Call NDS', ndses_phone_href(), 'button button-secondary'); ?>
                     <?php if ($is_home || $slug === 'dumpster-rentals') : ?>
-                        <a class="text-link hero-link" href="<?php echo esc_url(home_url('/dumpster-rentals')); ?>">Rent a Dumpster</a>
+                        <a class="text-link hero-link" href="<?php echo esc_url(home_url('/dumpster-rentals/')); ?>">Rent a Dumpster</a>
                     <?php endif; ?>
                 </div>
             </div>
