@@ -10,7 +10,7 @@
                     <p class="kicker"><?php echo esc_html($community['type']); ?></p>
                     <h3><?php echo esc_html($community['name']); ?></h3>
                     <p><strong><?php echo esc_html($community['service_day']); ?></strong> collection</p>
-                    <a class="text-link" href="<?php echo esc_url(home_url('/residential/' . $slug)); ?>"><?php echo esc_html(ndses_sec('communities', 'link_label', 'residential')); ?></a>
+                    <a class="text-link" href="<?php echo esc_url(home_url('/residential/' . $slug . '/')); ?>"><?php echo esc_html(ndses_sec('communities', 'link_label', 'residential')); ?></a>
                 </article>
             <?php endforeach; ?>
         </div>
