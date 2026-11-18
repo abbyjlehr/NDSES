@@ -13,6 +13,7 @@ This is a box-by-box list of every editable field (ACF field) in the website's a
 ## Contents
 
 - [Site Settings](#site-settings)
+- [Site-wide Text & Images](#site-wide-text--images)
 - [Pages: the Page Hero & SEO box](#pages-the-page-hero--seo-box)
 - [Pages: Page Sections, page by page](#pages-page-sections-page-by-page)
 - [Communities (town pages)](#communities-town-pages)
@@ -48,7 +49,26 @@ This is a box-by-box list of every editable field (ACF field) in the website's a
 | Spam Protection (reCAPTCHA) | Two keys that stop spam on the contact forms. | Your developer sets these. Don't change them. |
 | Analytics: Google Tag Manager ID | Turns on Google Analytics tracking. Already set to GTM-KFW62PL4. | Only works on ndses.com. Leave as is. |
 
-The **Header Logo** and **Footer Logo** boxes aren't used yet. The logo is built into the site. To change it, contact your developer.
+| Header Logo | The logo at the top left of every page. | A PNG with a transparent background works best. Leave empty to keep the current logo. |
+| Footer Logo | The logo in the footer. | Leave empty to use the Header Logo. |
+
+## Site-wide Text & Images
+
+**Where:** left menu → **Site Settings**, further down the screen, in the **Site-wide Text & Images** box. Click **Save Settings** at the bottom. Leave any box empty to go back to the built-in wording.
+
+| Tab and field | What it changes | Tips |
+|---|---|---|
+| Logos & Icons → Browser tab icon | The small square icon in browser tabs and bookmarks. | Square image, at least 512 × 512 pixels. |
+| Logos & Icons → Share picture | The picture shown when someone shares a link to the site on Facebook or in a text. | 1200 × 630 pixels works best. Empty = the home page truck photo. |
+| Header → Top bar text | The short line in the dark green bar at the very top of every page. | The office hours beside it come from Office Hours. |
+| Header → Quote button / Payment button | The two buttons at the top right ("Get a Quote", "Pay Bill"). | |
+| Header → Alert banner link | The link at the end of the yellow alert banner. | Only shows while an alert is on. |
+| Page Banner Buttons → First / Second button | The two buttons under the big title on each page ("Get a Quote", "Call NDS"). | |
+| Page Banner Buttons → Dumpster link | The "Rent a Dumpster" link on the Home and Dumpster Rentals pages. | |
+| Footer → Call-to-action heading / text / button | The dark green "Need trash service…" box at the top of the footer. | |
+| Footer → Column headings | "Contact", "Services", "Customers". | |
+| Footer → Services / Customers column links, Bottom links | The links in the footer. | One link per line, written as `Link text \| /page-address/`, e.g. `FAQs \| /faqs/`. |
+| Page Not Found → all fields | The page visitors see if they follow a broken or old link. | Suggestion cards are one per line: `Title \| /page-address/ \| Short description`. |
 
 ## Pages: the Page Hero & SEO box
 
@@ -58,7 +78,7 @@ The **Header Logo** and **Footer Logo** boxes aren't used yet. The logo is built
 |---|---|---|
 | Heading | The big title at the top of the page. | Keep it short, ideally under 10 words. |
 | Description | The paragraph under the big title. | Two or three sentences. |
-| Image | The large picture beside the title. | Wide photos work best. They're cropped to a 16:10 shape. Use JPG or WebP, under 500 KB if you can. |
+| Image | The large picture beside the title. | Wide photos work best. They're cropped to a 16:10 shape. Use JPG or WebP, under 500 KB if you can. On the Home page, the truck photo shows until you upload one here. |
 | Image Alt Text | A description of the picture for people using screen readers, and for Google. | Describe what's in the photo, e.g. "NDS truck collecting curbside recycling". |
 | SEO Title | The page title shown in Google results and on the browser tab. | Leave empty to use the page name. Under 60 characters. |
 | SEO Description | The grey description under the title in Google results. | Leave empty to use the page Description. Aim for 120–155 characters. |
@@ -80,6 +100,8 @@ Fields marked **(one per line)** turn each line you type into a bullet point on 
 - **Communities:** heading and link text. The town cards come from **Communities** in the left menu.
 - **Pickup Expectations:** heading and rules (one per line).
 - **Accepted Recycling:** heading and accepted items (one per line).
+- **Town Pages:** the headings, labels and buttons that every town page shares ("Service Information", "Printable schedules & guides", "Download", "Request Service" and so on). Each town's own content is under **Communities**.
+- The **Communities** tab also has **Word after the service day** (cards read "Tuesday collection").
 
 **Commercial**
 - **Areas We Service:** heading, counties (one per line), the note under the list, and the county map image. Type `{phone}` where you want the office phone number to appear. It fills in automatically from Site Settings.
@@ -96,6 +118,7 @@ Fields marked **(one per line)** turn each line you type into a bullet point on 
 - **Quote Form:** heading and text above the form.
 
 **Dumpster Calculator**
+- **Calculator Form:** the form's labels and button, the **projects** and the size each one suggests (one per line, written as `Project = Size`, e.g. `Home Remodel = 15 Yard Dumpster`; the size must match a Dumpster Sizes title exactly), the materials checkboxes, the heavy-materials checkbox with the size it always suggests and its note, and the text shown under the suggested size.
 - **Recommendation Box:** label, the starting heading and text (shown before a visitor picks a project), the small print, and the button text.
 - **Compare Sizes:** heading. The cards come from **Dumpster Sizes**.
 
@@ -118,16 +141,23 @@ Fields marked **(one per line)** turn each line you type into a bullet point on 
 
 ## Communities (town pages)
 
-**Where:** left menu → **Communities** → click a town.
+**Where:** left menu → **Communities** → click a town. Each Community **is** a town page. The town name is the title at the top; everything else is in the **Town Page** box, in tabs.
 
-| Field | What it changes | Tips |
+| Tab and field | What it changes | Tips |
 |---|---|---|
-| Service Day | The "Service Day" line on the town page, and the day shown on that town's card and in the Residential menu. | e.g. `Tuesday`. |
-| Trash Schedule | The "Trash:" line on the town page. | e.g. `Weekly`. |
-| Recycling Schedule | The "Recycling:" line on the town page. | e.g. `Every Other Week (see the service calendar below)`. |
-| SEO Title / SEO Description | How the town page appears in Google. | Optional. Leave empty to use the defaults. |
+| Intro & Schedule → Town or city | The small label above the name on the town's card on the Residential page. | Town, City or Village. |
+| Intro & Schedule → Intro paragraph | The paragraph under the town name at the top of the page. | |
+| Intro & Schedule → Service day | The "Service Day" line, the town's card on the Residential page, and its line in the Residential menu. | e.g. `Tuesday`. |
+| Intro & Schedule → Trash schedule / Recycling schedule | The "Trash:" and "Recycling:" lines. | e.g. `Weekly`. |
+| Service Guidelines → Service guidelines | The Service Guidelines list. | One rule per line. |
+| Bulk Items → Bulk item text / accepted / not accepted | The Bulk Item Guidance box. | One item per line. |
+| Recycling → accepted / not accepted / never accepted | The three "What belongs in recycling" boxes. | One item per line. Empty a list to hide that box. |
+| Downloads → Download 1–6: title and file | The "Printable schedules & guides" cards. | PDF or image. Leave a title empty to hide that download. |
+| Search (Google) → SEO title / description | How the town page appears in Google. | Optional. |
 
-The **Summary**, **Hero Description** and **Image** boxes on this screen aren't shown on the town pages yet. The rest of each town page (the intro paragraph, guidelines, recycling lists and downloadable calendars) is set by your developer, so send any changes to those to your developer.
+**Adding a new town:** click **Communities → Add Post**, type the town name as the title, fill in the tabs, and click **Publish**. Its page, its card on the Residential page and its link in the Residential menu are created automatically. The lists start out with the standard recycling and bulk-item lists, so adjust anything that's different. To put it on the coverage map, also add it under **Service Areas**.
+
+**Order:** towns are listed by the **Order** number in the right-hand sidebar (lower first).
 
 ## Dumpster Sizes
 
@@ -211,12 +241,11 @@ Pins are numbered alphabetically by town. Leave **Order** at 0.
 
 ## Changes that need your developer
 
-These can't be changed from the admin screens yet. Email your developer and they'll take care of it:
+Every picture and every piece of wording on the site can be changed in the admin screens above. These few things are deliberately left to your developer:
 
-- The logo.
-- The intro paragraph, guidelines, recycling lists and downloadable calendars on each town page.
-- Adding a brand-new town page (new map pins can be added yourself under Service Areas).
-- The main navigation menu at the top of the site. (WordPress has a Menus screen under Appearance, but building a menu there replaces the whole top menu, so ask first.)
-- Anything about the look of the site: colors, fonts, layout.
+- **The main menu at the top of the site.** Town links update themselves; other menu changes need your developer. (WordPress has a Menus screen under Appearance, but building a menu there replaces the whole top menu, so ask first.)
+- **The card and bank boxes on the payment form.** PayEngine has to control those for security. The heading and side box above them are editable.
+- **The service-area map drawing.** The site draws it automatically from the pins under Service Areas, so it's always up to date.
+- **The look of the site:** colors, fonts and layout.
 
 **Developer contact:** ajlehr123@gmail.com
