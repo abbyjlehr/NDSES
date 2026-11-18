@@ -253,20 +253,9 @@ function ndses_get_announcement(): string
  */
 function ndses_get_communities(): array
 {
-    $communities = ndses_data()['communities'];
-    foreach (ndses_cms_posts('community') as $post) {
-        if (!isset($communities[$post->post_name])) {
-            continue;
-        }
-        foreach (['service_day', 'trash_schedule', 'recycling_schedule'] as $key) {
-            $value = trim((string) ndses_acf($key, $post->ID));
-            if ($value !== '') {
-                $communities[$post->post_name][$key] = $value;
-            }
-        }
-    }
+    static $communities = null;
 
-    return $communities;
+    return $communities ??= ndses_build_communities();
 }
 
 /** Commercial containers: [['name', 'body', 'dimensions', 'capacity', 'image', 'ideal'], ...]. */
