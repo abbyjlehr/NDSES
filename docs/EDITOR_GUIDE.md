@@ -125,6 +125,18 @@ This is the one screen that controls information shown across the *entire* site 
 | Mission Statement | The "Our Mission" box on the Home and About pages |
 | About Page: Our Story | The company history on the About page. Leave blank to keep the current text |
 
+**Site-wide Text & Images** (further down the same screen) holds the wording and pictures that appear on every page, in tabs:
+
+| Tab | What it controls |
+| --- | --- |
+| Logos & Icons | The small browser-tab icon, and the picture shown when someone shares a link to the site (the header and footer logos are in the table above) |
+| Header | The line in the dark green top bar, the Get a Quote and Pay Bill button labels, and the alert banner's "View updates" link |
+| Page Banner Buttons | The "Get a Quote" and "Call NDS" buttons under each page's big title, and the "Rent a Dumpster" link |
+| Footer | The "Need trash service…" box, the column headings, and the footer links (one per line, written as `Link text \| /page-address/`) |
+| Page Not Found | Everything on the page visitors see if they follow a broken link |
+
+Leave any of these boxes empty to go back to the built-in wording.
+
 At the bottom of this screen you'll also see a few **Integration Status** fields (PayEngine Status, Form Backend Status, Facebook Alert Sync Status, Calendar Integration Status). Most of these are informational notes for your developer, not switches — changing them doesn't turn anything on or off. **PayEngine Status is the exception**: it's a real switch, and it sits next to the actual PayEngine credential fields (Public Key, API Host, Server API URL, Merchant ID) — see [Accepting Payments](#accepting-payments-payengine) before touching any of these.
 
 ## Editing Page Content
@@ -142,11 +154,11 @@ Every box starts filled in with what the website shows today, so you only change
 
 **How to update a page banner**
 1. In the left menu, click **Pages**, then click the page's name (for example **About**).
-2. In **Page Hero & SEO**, change the **Eyebrow**, **Heading**, or **Description**.
+2. In **Page Hero & SEO**, change the **Heading** or **Description**.
 3. To change the picture, click **Add Image** (or the current image), choose or upload one, then click **Select**.
 4. Click **Update** at the top right.
 
-> **Home page:** the truck-by-the-lake background photo is built into the design (the green fade is lined up with where the truck sits), so the Home page's Hero **Image** box has no effect. Its eyebrow, heading, and description still work. To change the home photo, contact your developer.
+> **Home page:** the truck-by-the-lake photo shows until you upload a picture in the Home page's Hero **Image** box. Upload one there to replace it; remove it to go back to the truck photo.
 
 **How to update a section of a page**
 1. In the left menu, click **Pages**, then click the page's name.
@@ -159,11 +171,11 @@ What's in each page's tabs:
 
 | Page | Tabs (top of page to bottom) |
 |---|---|
-| Home | Our Services · Why NDS · Dumpster Sizes · FAQs |
-| Residential | Communities · Pickup Expectations · Accepted Recycling |
+| Home | Our Services · Automatic Payments · Why NDS · Dumpster Sizes · FAQs |
+| Residential | Communities · Pickup Expectations · Accepted Recycling · Town Pages (headings and buttons shared by every town page) |
 | Commercial | Areas We Service (including the county map image) · Collection Schedules · Container Options · Commercial Recycling · Industries We Serve · Quote Form |
 | Dumpster Rentals | Size Guide · Materials · Rental Process · Quote Form |
-| Dumpster Calculator | Recommendation Box |
+| Dumpster Calculator | Calculator Form (projects, sizes, materials, labels) · Recommendation Box · Compare Sizes |
 | Special Events | Event Options · Quote Form |
 | About | Our Story · Meet The Team (names, text, and photos) |
 | Make a Payment | Payment Form · Side Box |
@@ -177,18 +189,31 @@ A few things live in their own menus instead, and each tab says so where it appl
 
 **Menu: Communities**
 
-One entry per town/city you service (e.g. Town of Walworth, City of Delavan). Each has:
+One entry per town or city you service. Each entry **is** that town's page: everything on it is edited here, in the **Town Page** box, which has a tab for each part of the page:
 
-- **Service Day, Trash Schedule, Recycling Schedule** — these update the community's page and the Residential page.
+- **Intro & Schedule:** Town or city label, intro paragraph, service day, trash schedule, recycling schedule.
+- **Service Guidelines:** the rules list (one rule per line).
+- **Bulk Items:** the bulk item text, and the accepted / not accepted lists.
+- **Recycling:** the accepted, not accepted, and never accepted lists.
+- **Downloads:** up to 6 calendars, flyers or guides, each with a title and a file (PDF or image).
+- **Search (Google):** optional title and description for Google results.
 
-![Community: Service Day, Trash Schedule, Recycling Schedule](images/acf-community.jpg)
+![Community: the Town Page box](images/acf-community.jpg)
 
-**How to change a pickup day or schedule**
+**How to change a town page**
 1. In the left menu, click **Communities**, then click the town (for example **Town of Walworth**).
-2. Change **Service Day**, **Trash Schedule**, or **Recycling Schedule**.
-3. Click **Save**. Ignore the other boxes on this screen (Content Items, Material Lists, Capacity, and so on); communities don't use them.
+2. Click the tab you need and change the text. For lists, put **one item per line**. Empty a whole list to hide that box on the page.
+3. To replace a calendar, go to **Downloads**, click the file's **Remove** (x), then **Add File** and upload the new one.
+4. Click **Update** at the top right.
 
-The entry's **slug** (the part of its URL, e.g. `town-of-walworth`) must match the community's existing page address for its schedule to show. The five current communities are Town of Walworth, Town of Delavan, City of Delavan, Town of Darien, and Town of Sharon. Adding a brand-new community, or changing its recycling and bulk-item lists, is a developer change.
+**How to add a new town**
+1. Click **Communities → Add Post**.
+2. Type the town name as the title (for example **Village of Fontana**).
+3. Fill in the **Intro & Schedule** tab. The recycling and bulk-item lists start out with the standard lists, so check them and change anything that's different for this town.
+4. Click **Publish**. The town gets its own page (for example `/residential/village-of-fontana/`), a card on the Residential page, and a link in the Residential menu, automatically.
+5. To add the town to the coverage map too, add it under **Service Areas** (see below).
+
+The order towns are listed in follows the **Order** number in the right-hand sidebar (lower first; towns with the same number list in the order they were added). The headings and buttons every town page shares ("Service Information", "Download", "Request Service" and so on) are under **Pages → Residential → Town Pages**.
 
 ## Managing Dumpster Sizes
 
@@ -227,7 +252,7 @@ The permanent dumpster options on the Commercial page (96 Gallon, 2 Yard, 4 Yard
 
 > **Important:** no containers are entered here yet, so the Commercial page shows its built-in list (96 Gallon, 2, 4, 6, and 8 Yard). As soon as you publish one, only published containers show — enter all five before publishing, or publish them together.
 
-**Note on the Dumpster Calculator tool** (the "recommend a size" quiz on the Dumpster Calculator page): its sizing logic is fixed in the site's code, not editable here in wp-admin. By design, checking **Other Heavy Materials** always caps the recommendation at 10 Yard regardless of project type — heavy materials (concrete, dirt, roofing tear-off) hit a dumpster's weight limit long before it's visually full, so a bigger box wouldn't help. The tool shows an explanatory note whenever that happens. If you ever want the underlying project-type-to-size mapping changed, that's a developer change, not a content edit.
+**Changing the Dumpster Calculator** (the "recommend a size" tool on the Dumpster Calculator page): go to **Pages → Dumpster Calculator → Calculator Form**. The **Projects** box has one project per line, written as `Project = Size`, for example `Home Remodel = 15 Yard Dumpster`. Add a line to add a project, delete a line to remove one, or change the size after the `=`. The size must match a Dumpster Sizes title exactly. Ticking the **heavy materials** checkbox always suggests the **Heavy-load size** (10 Yard Dumpster today), because heavy loads hit a dumpster's weight limit long before it's full; you can change that size and its note in the same tab.
 
 ## Managing FAQs
 
@@ -254,7 +279,7 @@ The FAQs page shows exactly the FAQs published here (21 today).
 **Service Areas** power the coverage map shown on the Home, About, and Commercial pages, and the address check on the Dumpster Calculator. Each entry is a town or county with:
 - County name (for example "Walworth County")
 - Service Types (check any combination of **Residential**, **Commercial**, **Temporary roll-off / dumpster rentals**)
-- Latitude and Longitude — the town's position, in decimal degrees. Towns with these filled in get a numbered pin on the Walworth County map. Leave both blank for a county entry, or for a town outside Walworth County — it still appears in the list, just without a pin.
+- Latitude and Longitude — the town's position, in decimal degrees. Towns with these filled in get a numbered pin on the service-area map. Leave both blank for a county entry; it still appears in the list, just without a pin.
 
 **Where to get latitude and longitude:** open Google Maps, right-click the centre of the town, and the first line of the menu shows two numbers like `42.6331, -88.6437`. The first is the Latitude, the second is the Longitude (it's negative here in Wisconsin). Click them to copy, then paste each into its field.
 
@@ -262,7 +287,7 @@ The FAQs page shows exactly the FAQs published here (21 today).
 1. In the left menu, click **Service Areas**. Click **Add New**, or click an area to edit it.
 2. Type the title (the town or county name) and the **County**.
 3. Check every **Service Type** you offer there.
-4. For a town on the Walworth County map, paste its **Latitude** and **Longitude**. For a county, leave them blank.
+4. For a town, paste its **Latitude** and **Longitude**. For a county, leave them blank.
 5. Click **Publish** (or **Save**), then check the pin on the Home page map.
 
 The map shows exactly the areas published here (9 today). Ignore the Schedule boxes on this screen.
@@ -362,4 +387,4 @@ No — those are informational notes for developers, not real switches.
 
 ## Who to Contact
 
-For anything beyond day-to-day content edits — new page types, design changes, payment/PayEngine configuration, technical errors, or account access — contact Abby Lehr at **abby.lehr@radicalsurfaces.com**.
+For anything beyond day-to-day content edits — new page types, design changes, payment/PayEngine configuration, technical errors, or account access — contact Abby Lehr at **ajlehr123@gmail.com**.

@@ -21,7 +21,7 @@ function ndses_seo(): array
 
     $title = null;
     $description = '';
-    $image = ndses_asset('home-hero-truck.jpg');
+    $image = ndses_sw_image('logos', 'share_image') ?: ndses_asset('home-hero-truck.jpg');
 
     $community_slug = get_query_var('ndses_community');
     if ($community_slug) {
@@ -29,7 +29,11 @@ function ndses_seo(): array
         $post = get_page_by_path($community_slug, OBJECT, 'community');
         if ($community) {
             $title = ($post ? trim((string) ndses_acf('seo_title', $post->ID)) : '') ?: $community['name'] . ' Trash & Recycling';
-            $description = ($post ? trim((string) ndses_acf('seo_description', $post->ID)) : '') ?: (string) ($community['description'] ?? '');
+            $description = ($post ? trim((string) ndses_acf('seo_description', $post->ID)) : '') ?: sprintf(
+                '%s trash and recycling from NDS Environmental Solutions: %s collection, printable schedules, and what goes in your trash and recycling.',
+                $community['name'],
+                (string) ($community['service_day'] ?? '') ?: 'weekly'
+            );
         }
     } elseif (is_front_page() || is_page()) {
         $hero = ndses_page_hero();
@@ -41,7 +45,7 @@ function ndses_seo(): array
             $image = $hero_image['url'];
         }
     } elseif (is_404()) {
-        $title = 'Page not found';
+        $title = ndses_sw('notfound', 'heading');
     }
 
     if ($description === '') {
@@ -202,4 +206,17 @@ add_filter('rest_endpoints', static function (array $endpoints): array {
         unset($endpoints['/wp/v2/users'], $endpoints['/wp/v2/users/(?P<id>[\d]+)']);
     }
     return $endpoints;
+});
+
+/**
+ * Community pages are served by the Residential page with a query var, so
+ * WordPress would otherwise give every town page the Residential page's
+ * canonical URL and search engines would drop the town pages.
+ */
+add_filter('get_canonical_url', function ($url) {
+    $slug = get_query_var('ndses_community');
+    if ($slug && isset(ndses_get_communities()[$slug])) {
+        return home_url('/residential/' . $slug . '/');
+    }
+    return $url;
 });

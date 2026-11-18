@@ -7,16 +7,18 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('NDSES_THEME_VERSION', '3.6.2');
+define('NDSES_THEME_VERSION', '3.8.1');
 define('NDSES_THEME_DIR', get_template_directory());
 
 require_once NDSES_THEME_DIR . '/inc/data.php';
 require_once NDSES_THEME_DIR . '/inc/helpers.php';
 require_once NDSES_THEME_DIR . '/inc/cms.php';
 require_once NDSES_THEME_DIR . '/inc/page-sections.php';
+require_once NDSES_THEME_DIR . '/inc/editable.php';
 require_once NDSES_THEME_DIR . '/inc/template-tags.php';
 require_once NDSES_THEME_DIR . '/inc/geocode.php';
 require_once NDSES_THEME_DIR . '/inc/seo.php';
+require_once NDSES_THEME_DIR . '/inc/analytics.php';
 
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
@@ -34,7 +36,10 @@ add_action('after_setup_theme', function () {
 // every page. Use the NDS icon unless a Site Icon is set in
 // Appearance > Customize > Site Identity (WordPress outputs that one).
 add_action('wp_head', function () {
-    if (!has_site_icon()) {
+    $icon = ndses_sw_image('logos', 'site_icon');
+    if ($icon) {
+        printf('<link rel="icon" href="%1$s">' . "\n" . '<link rel="apple-touch-icon" href="%1$s">' . "\n", esc_url($icon));
+    } elseif (!has_site_icon()) {
         printf('<link rel="icon" href="%s" sizes="96x96" type="image/png">' . "\n", esc_url(ndses_asset('site-icon.png')));
     }
 });

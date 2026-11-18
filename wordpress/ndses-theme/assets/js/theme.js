@@ -1,4 +1,14 @@
 (function () {
+  /**
+   * Analytics: push an event to the Google Tag Manager data layer. GTM
+   * (loaded only on ndses.com, see inc/analytics.php) turns these into GA4
+   * events. Never put names, emails, phone numbers or account numbers here.
+   */
+  function track(eventName, params) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: eventName }, params || {}));
+  }
+
   // Scroll-reveal: fade/slide in each section's content once it enters the
   // viewport. Skipped entirely when the visitor prefers reduced motion, or
   // when IntersectionObserver isn't available — content just stays visible.
@@ -77,11 +87,16 @@
    */
   function initNavigation() {
     const CLOSE_DELAY_MS = 140;
+    // Brief hover intent so menus don't pop open when the pointer merely
+    // passes over the nav on its way to something else. Once a menu is
+    // open, moving to a neighbor switches instantly.
+    const OPEN_DELAY_MS = 90;
     const nav = document.querySelector('[data-desktop-nav]');
     const items = nav ? [...nav.querySelectorAll('[data-nav-item]')] : [];
     const triggers = items.map((item) => item.querySelector('[data-nav-trigger]'));
     let openItem = null;
     let closeTimer;
+    let openTimer;
     let lastPointer = '';
 
     const panelOf = (item) => item.querySelector('[data-nav-panel]');
@@ -90,6 +105,7 @@
 
     function setOpen(item) {
       window.clearTimeout(closeTimer);
+      window.clearTimeout(openTimer);
       items.forEach((other) => {
         const open = other === item;
         panelOf(other).hidden = !open;
@@ -106,10 +122,15 @@
       const trigger = triggerOf(item);
 
       item.addEventListener('pointerenter', (event) => {
-        if (event.pointerType === 'mouse') setOpen(item);
+        if (event.pointerType !== 'mouse') return;
+        window.clearTimeout(closeTimer);
+        window.clearTimeout(openTimer);
+        if (openItem) setOpen(item);
+        else openTimer = window.setTimeout(() => setOpen(item), OPEN_DELAY_MS);
       });
       item.addEventListener('pointerleave', (event) => {
         if (event.pointerType !== 'mouse') return;
+        window.clearTimeout(openTimer);
         window.clearTimeout(closeTimer);
         closeTimer = window.setTimeout(closeAll, CLOSE_DELAY_MS);
       });
@@ -118,7 +139,14 @@
         lastPointer = event.pointerType;
       });
       trigger.addEventListener('click', () => {
-        // A mouse already opened the menu on hover, so its click keeps it open.
+        // Like a normal site nav, clicking a section name with a mouse goes
+        // to that section's overview page (when it has one). Touch and
+        // keyboard toggle the menu instead, since they can't hover.
+        const href = trigger.dataset.href;
+        if (lastPointer === 'mouse' && href) {
+          window.location.href = href;
+          return;
+        }
         if (lastPointer === 'mouse') setOpen(item);
         else setOpen(openItem === item ? null : item);
       });
@@ -226,7 +254,12 @@
   if (calculator) {
     const form = calculator.querySelector('form');
     const result = calculator.querySelector('.calculator-result');
-    const rules = {
+    // Projects, sizes and wording are edited in wp-admin (Dumpster
+    // Calculator Page Sections → Calculator Form) and rendered into
+    // data-calculator-config; these defaults only cover a missing config.
+    let config = {};
+    try { config = JSON.parse(calculator.dataset.calculatorConfig || '{}'); } catch (e) { config = {}; }
+    const rules = config.rules && Object.keys(config.rules).length ? config.rules : {
       'Home/Garage Cleanout': '10 Yard Dumpster',
       'Home Remodel': '15 Yard Dumpster',
       'Bathroom/Kitchen Demo': '12 Yard Dumpster',
@@ -234,6 +267,11 @@
       'Concrete, Dirt, and Rocks': '10 Yard Dumpster',
       Other: '20 Yard Dumpster',
     };
+    const heavyLabel = config.heavy || 'Other Heavy Materials';
+    const heavySize = config.heavySize || '10 Yard Dumpster';
+    const heavyNote = config.heavyNote || '';
+    const resultTextFull = config.resultText || 'This size is a good starting point for your selected project. NDS can confirm final sizing, material restrictions, and availability when you request a quote.';
+    const escapeHtml = (text) => String(text).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
 
     // The eyebrow, small print, and button text are editable in wp-admin
     // (Dumpster Calculator Page Sections), so reuse what the page rendered.
@@ -248,23 +286,22 @@
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       const data = new FormData(form);
-      const project = data.get('project') || 'Home Remodel';
+      const project = data.get('project') || Object.keys(rules)[0];
       const materials = data.getAll('materials');
-      let recommendation = rules[project] || '15 Yard Dumpster';
-      let materialsNote = '';
+      let recommendation = rules[project] || heavySize;
+      let text = resultTextFull;
 
-      // Heavy materials (concrete, dirt, roofing tear-off, etc.) hit a
-      // dumpster's weight limit long before it's visually full, so the
-      // safe size is capped regardless of project type. The note always
-      // shows when this box is checked -- even for a project that already
-      // maps to 10 Yard -- so the result doesn't silently match the
-      // untouched default and read as the tool ignoring the selection.
-      if (materials.includes('Other Heavy Materials')) {
-        recommendation = '10 Yard Dumpster';
-        materialsNote = ' Heavy materials (concrete, dirt, roofing tear-off, etc.) hit a dumpster’s weight limit well before it fills up, so we cap the recommended size for heavy loads regardless of project type.';
+      // Heavy materials hit a dumpster's weight limit long before it's
+      // visually full, so ticking that box always suggests the heavy-load
+      // size, and its note is always added so the result visibly reflects
+      // the selection.
+      if (materials.includes(heavyLabel)) {
+        recommendation = heavySize;
+        if (heavyNote) text = text + ' ' + heavyNote;
       }
 
-      result.innerHTML = '<p class="result-label">' + resultEyebrow + '</p><h2>' + recommendation + '</h2><p>This size is a good starting point for your selected project.' + materialsNote + ' NDS can confirm final sizing, material restrictions, and availability when you request a quote.</p>' + (resultNote ? '<p class="small-note">' + resultNote + '</p>' : '') + '<a class="button button-primary" href="' + window.location.origin + '/dumpster-rentals/?service=dumpster&size=' + encodeURIComponent(recommendation.split(' ')[0] + '-yard') + '#quote">' + resultButton + '</a>';
+      const sizeSlug = (recommendation.match(/\d+/) || ['10'])[0] + '-yard';
+      result.innerHTML = '<p class="result-label">' + resultEyebrow + '</p><h2>' + escapeHtml(recommendation) + '</h2><p>' + escapeHtml(text) + '</p>' + (resultNote ? '<p class="small-note">' + resultNote + '</p>' : '') + '<a class="button button-primary" href="' + window.location.origin + '/dumpster-rentals/?service=dumpster&size=' + encodeURIComponent(sizeSlug) + '#quote">' + resultButton + '</a>';
     });
 
     ndsesInitAddressLookup(form.querySelector('input[name="address"]'));
@@ -499,6 +536,13 @@
         .then(function (result) {
           const mode = result.body && result.body.mode;
           if (result.ok && mode === 'success') {
+            const paidAmount = parseFloat(String(values.amount || '').replace(/[^0-9.]/g, ''));
+            track('ndses_payment_complete', {
+              value: isFinite(paidAmount) ? paidAmount : 0,
+              currency: 'USD',
+              payment_method: paymentMethod,
+              transaction_id: result.body.transactionId ? String(result.body.transactionId) : undefined
+            });
             // form.reset() puts the method back to Card without firing
             // 'change', and doesn't reach the SecureFields iframes, so
             // re-sync the visible fields and clear the card/bank details.
@@ -596,6 +640,10 @@
         })
         .then(function (result) {
           if (result.ok) {
+            track('ndses_form_submit', {
+              form_type: data.formType || 'contact',
+              service_type: data.serviceType || undefined
+            });
             form.reset();
             if (status) {
               status.textContent = 'Thanks — your request has been sent. NDS will be in touch soon.';
