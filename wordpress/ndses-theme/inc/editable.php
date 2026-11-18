@@ -417,3 +417,29 @@ add_filter('acf/validate_form', function (array $args): array {
 
     return $args;
 });
+
+/** Flatten a list saved in an older format (array rows) into one item per line. */
+function ndses_flatten_lines($value): string
+{
+    if (!is_array($value)) {
+        return (string) $value;
+    }
+    $lines = [];
+    array_walk_recursive($value, static function ($item) use (&$lines) {
+        $item = trim((string) $item);
+        if ($item !== '') {
+            $lines[] = $item;
+        }
+    });
+
+    return implode("\n", $lines);
+}
+
+/** Text boxes on the Town Page never receive an array, on screen or on the site. */
+add_filter('acf/load_value', function ($value, $post_id, $field) {
+    if (is_array($value) && str_starts_with((string) ($field['key'] ?? ''), 'field_ndses_town_') && in_array($field['type'] ?? '', ['text', 'textarea', 'select'], true)) {
+        return ndses_flatten_lines($value);
+    }
+
+    return $value;
+}, 20, 3);
