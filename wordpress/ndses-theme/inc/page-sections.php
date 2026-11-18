@@ -79,6 +79,7 @@ function ndses_page_sections(): array
                 'communities' => ['label' => 'Communities', 'fields' => [
                     'heading' => ['text', 'Heading', 'Select your community', 'The community cards come from Communities in the left menu.'],
                     'link_label' => ['text', 'Card link text', 'View details'],
+                    'day_suffix' => ['text', 'Word after the service day', 'collection', 'Cards read e.g. "Tuesday collection".'],
                 ]],
                 'pickup' => ['label' => 'Pickup Expectations', 'fields' => [
                     'heading' => ['text', 'Heading', 'Simple rules that keep collection moving'],
@@ -87,6 +88,22 @@ function ndses_page_sections(): array
                 'recycling' => ['label' => 'Accepted Recycling', 'fields' => [
                     'heading' => ['text', 'Box heading', 'Accepted recycling'],
                     'list' => ['list', 'Accepted items (one per line)', $data['communities']['town-of-delavan']['accepted_recycling']],
+                ]],
+                'town' => ['label' => 'Town Pages', 'fields' => [
+                    'request_button' => ['text', 'First button', 'Request Service', 'Headings and buttons shared by every town page. Each town\'s own text, schedule, lists and downloads are under Communities in the left menu.'],
+                    'call_button' => ['text', 'Second button', 'Call NDS'],
+                    'info_heading' => ['text', 'Schedule box heading', 'Service Information'],
+                    'day_label' => ['text', 'Service day label', 'Service Day:'],
+                    'trash_label' => ['text', 'Trash label', 'Trash:'],
+                    'recycling_label' => ['text', 'Recycling label', 'Recycling:'],
+                    'docs_heading' => ['text', 'Downloads heading', 'Printable schedules & guides'],
+                    'download_label' => ['text', 'Download link text', 'Download'],
+                    'guidelines_heading' => ['text', 'Guidelines heading', 'Service Guidelines'],
+                    'bulk_heading' => ['text', 'Bulk items heading', 'Bulk Item Guidance'],
+                    'recycling_heading' => ['text', 'Recycling heading', 'What belongs in recycling'],
+                    'accepted_label' => ['text', '"Accepted" label', 'Accepted'],
+                    'not_accepted_label' => ['text', '"Not accepted" label', 'Not accepted'],
+                    'never_label' => ['text', '"Never accepted" label', 'Never accepted'],
                 ]],
             ],
         ],
@@ -154,6 +171,19 @@ function ndses_page_sections(): array
         'dumpster-calculator' => [
             'title' => 'Dumpster Calculator',
             'sections' => [
+                'form' => ['label' => 'Calculator Form', 'fields' => [
+                    'address_label' => ['text', 'Address label', 'Service address'],
+                    'address_placeholder' => ['text', 'Address box hint', 'Enter service address', 'The grey hint inside the empty address box.'],
+                    'project_label' => ['text', 'Project label', 'Project type'],
+                    'projects' => ['list', 'Projects and the size each one suggests', ['Home/Garage Cleanout = 10 Yard Dumpster', 'Home Remodel = 15 Yard Dumpster', 'Bathroom/Kitchen Demo = 12 Yard Dumpster', 'Roofing/Siding Teardown = 20 Yard Dumpster', 'Concrete, Dirt, and Rocks = 10 Yard Dumpster', 'Other = 20 Yard Dumpster'], 'One project per line, written as Project = Size. The size must match a Dumpster Sizes title exactly, e.g. 15 Yard Dumpster.'],
+                    'materials_label' => ['text', 'Materials label', 'Materials'],
+                    'materials' => ['list', 'Materials checkboxes', ['Mixed Household Trash', 'Construction Debris', 'Wood'], 'One per line. These are for the visitor\'s reference and don\'t change the suggestion.'],
+                    'heavy_label' => ['text', 'Heavy materials checkbox', 'Other Heavy Materials', 'The last checkbox. Ticking it always suggests the heavy-load size below.'],
+                    'heavy_size' => ['text', 'Heavy-load size', '10 Yard Dumpster', 'Must match a Dumpster Sizes title exactly.'],
+                    'heavy_note' => ['textarea', 'Heavy-load note', 'Heavy materials (concrete, dirt, roofing tear-off, etc.) hit a dumpster’s weight limit well before it fills up, so we cap the recommended size for heavy loads regardless of project type.', 'Added to the result when the heavy box is ticked.'],
+                    'result_text' => ['textarea', 'Result text', 'This size is a good starting point for your selected project. NDS can confirm final sizing, material restrictions, and availability when you request a quote.', 'Shown under the suggested size after a visitor clicks the button.'],
+                    'submit' => ['text', 'Button text', 'Recommend a Size'],
+                ]],
                 'result' => ['label' => 'Recommendation Box', 'fields' => [
                     'eyebrow' => ['text', 'Label', 'Recommendation'],
                     'heading' => ['text', 'Starting heading', 'Start with the 15 Yard Dumpster', 'Shown before a visitor picks a project. After they click Recommend a Size, the heading shows the recommended size.'],

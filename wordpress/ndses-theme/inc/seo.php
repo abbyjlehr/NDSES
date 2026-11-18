@@ -21,7 +21,7 @@ function ndses_seo(): array
 
     $title = null;
     $description = '';
-    $image = ndses_asset('home-hero-truck.jpg');
+    $image = ndses_sw_image('logos', 'share_image') ?: ndses_asset('home-hero-truck.jpg');
 
     $community_slug = get_query_var('ndses_community');
     if ($community_slug) {
@@ -45,7 +45,7 @@ function ndses_seo(): array
             $image = $hero_image['url'];
         }
     } elseif (is_404()) {
-        $title = 'Page not found';
+        $title = ndses_sw('notfound', 'heading');
     }
 
     if ($description === '') {

@@ -254,7 +254,12 @@
   if (calculator) {
     const form = calculator.querySelector('form');
     const result = calculator.querySelector('.calculator-result');
-    const rules = {
+    // Projects, sizes and wording are edited in wp-admin (Dumpster
+    // Calculator Page Sections → Calculator Form) and rendered into
+    // data-calculator-config; these defaults only cover a missing config.
+    let config = {};
+    try { config = JSON.parse(calculator.dataset.calculatorConfig || '{}'); } catch (e) { config = {}; }
+    const rules = config.rules && Object.keys(config.rules).length ? config.rules : {
       'Home/Garage Cleanout': '10 Yard Dumpster',
       'Home Remodel': '15 Yard Dumpster',
       'Bathroom/Kitchen Demo': '12 Yard Dumpster',
@@ -262,6 +267,11 @@
       'Concrete, Dirt, and Rocks': '10 Yard Dumpster',
       Other: '20 Yard Dumpster',
     };
+    const heavyLabel = config.heavy || 'Other Heavy Materials';
+    const heavySize = config.heavySize || '10 Yard Dumpster';
+    const heavyNote = config.heavyNote || '';
+    const resultTextFull = config.resultText || 'This size is a good starting point for your selected project. NDS can confirm final sizing, material restrictions, and availability when you request a quote.';
+    const escapeHtml = (text) => String(text).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
 
     // The eyebrow, small print, and button text are editable in wp-admin
     // (Dumpster Calculator Page Sections), so reuse what the page rendered.
@@ -276,23 +286,22 @@
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       const data = new FormData(form);
-      const project = data.get('project') || 'Home Remodel';
+      const project = data.get('project') || Object.keys(rules)[0];
       const materials = data.getAll('materials');
-      let recommendation = rules[project] || '15 Yard Dumpster';
-      let materialsNote = '';
+      let recommendation = rules[project] || heavySize;
+      let text = resultTextFull;
 
-      // Heavy materials (concrete, dirt, roofing tear-off, etc.) hit a
-      // dumpster's weight limit long before it's visually full, so the
-      // safe size is capped regardless of project type. The note always
-      // shows when this box is checked -- even for a project that already
-      // maps to 10 Yard -- so the result doesn't silently match the
-      // untouched default and read as the tool ignoring the selection.
-      if (materials.includes('Other Heavy Materials')) {
-        recommendation = '10 Yard Dumpster';
-        materialsNote = ' Heavy materials (concrete, dirt, roofing tear-off, etc.) hit a dumpster’s weight limit well before it fills up, so we cap the recommended size for heavy loads regardless of project type.';
+      // Heavy materials hit a dumpster's weight limit long before it's
+      // visually full, so ticking that box always suggests the heavy-load
+      // size, and its note is always added so the result visibly reflects
+      // the selection.
+      if (materials.includes(heavyLabel)) {
+        recommendation = heavySize;
+        if (heavyNote) text = text + ' ' + heavyNote;
       }
 
-      result.innerHTML = '<p class="result-label">' + resultEyebrow + '</p><h2>' + recommendation + '</h2><p>This size is a good starting point for your selected project.' + materialsNote + ' NDS can confirm final sizing, material restrictions, and availability when you request a quote.</p>' + (resultNote ? '<p class="small-note">' + resultNote + '</p>' : '') + '<a class="button button-primary" href="' + window.location.origin + '/dumpster-rentals/?service=dumpster&size=' + encodeURIComponent(recommendation.split(' ')[0] + '-yard') + '#quote">' + resultButton + '</a>';
+      const sizeSlug = (recommendation.match(/\d+/) || ['10'])[0] + '-yard';
+      result.innerHTML = '<p class="result-label">' + resultEyebrow + '</p><h2>' + escapeHtml(recommendation) + '</h2><p>' + escapeHtml(text) + '</p>' + (resultNote ? '<p class="small-note">' + resultNote + '</p>' : '') + '<a class="button button-primary" href="' + window.location.origin + '/dumpster-rentals/?service=dumpster&size=' + encodeURIComponent(sizeSlug) + '#quote">' + resultButton + '</a>';
     });
 
     ndsesInitAddressLookup(form.querySelector('input[name="address"]'));

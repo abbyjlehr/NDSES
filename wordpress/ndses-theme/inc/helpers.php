@@ -168,6 +168,13 @@ function ndses_nav_items(): array
     }
 
     return array_map(static function (array $item): array {
+        if ($item['url'] === '/residential/' && !empty($item['children'])) {
+            $item['children'] = [$item['children'][0]];
+            foreach (ndses_get_communities() as $slug => $community) {
+                $day = trim((string) ($community['service_day'] ?? ''));
+                $item['children'][] = ['label' => $community['name'], 'url' => '/residential/' . $slug . '/', 'description' => $day !== '' ? $day . ' collection.' : ''];
+            }
+        }
         $item['url'] = home_url($item['url']);
         $item['children'] = array_map(static fn (array $child) => array_merge($child, ['url' => home_url($child['url'])]), $item['children'] ?? []);
 

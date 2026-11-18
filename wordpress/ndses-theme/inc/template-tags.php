@@ -23,9 +23,12 @@ function ndses_render_hero(?string $slug = null): void
     $is_home = $slug === 'home';
     $image_alt = ($hero['heading'] ?? 'NDS Environmental Solutions') . ' visual';
 
-    // Home: always the Delavan lakefront truck photo. The Home page's Hero
-    // image (and its built-in fallback, a sign proof) is intentionally not used.
-    if ($is_home) {
+    // Home: the Delavan lakefront truck photo, unless a picture has been
+    // uploaded in the Home page's Hero box. (The built-in Home hero default,
+    // a sign proof, is intentionally never used.)
+    if ($is_home && is_array($image) && !empty($image['url'])) {
+        $image_alt = trim((string) ($hero['image_alt'] ?? '')) ?: $image_alt;
+    } elseif ($is_home) {
         $image_url = ndses_asset('home-hero-truck.jpg');
         $width = 1672;
         $height = 941;
@@ -38,10 +41,10 @@ function ndses_render_hero(?string $slug = null): void
                 <h1><?php echo esc_html($hero['heading'] ?? get_the_title()); ?></h1>
                 <p class="hero-text"><?php echo esc_html($hero['description'] ?? ''); ?></p>
                 <div class="hero-actions">
-                    <?php ndses_button('Get a Quote', home_url('/contact/')); ?>
-                    <?php ndses_button('Call NDS', ndses_phone_href(), 'button button-secondary'); ?>
+                    <?php ndses_button(ndses_sw('banner', 'primary'), home_url('/contact/')); ?>
+                    <?php ndses_button(ndses_sw('banner', 'secondary'), ndses_phone_href(), 'button button-secondary'); ?>
                     <?php if ($is_home || $slug === 'dumpster-rentals') : ?>
-                        <a class="text-link hero-link" href="<?php echo esc_url(home_url('/dumpster-rentals/')); ?>">Rent a Dumpster</a>
+                        <a class="text-link hero-link" href="<?php echo esc_url(home_url('/dumpster-rentals/')); ?>"><?php echo esc_html(ndses_sw('banner', 'rent_link')); ?></a>
                     <?php endif; ?>
                 </div>
             </div>
